@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/shopping_cart/cartScreen.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../details/details_screen.dart';
 import 'constants.dart';
 import '../models/Products.dart';
 import 'item_card.dart';
+import 'package:flutter_app/myStore.dart';
+import 'package:provider/provider.dart';
 
 class Body extends StatelessWidget {
-  List<ItemCard> cartList = [];
+
   @override
   Widget build(BuildContext context) {
+    var store = Provider.of<myStore>(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -53,7 +57,16 @@ class Body extends StatelessWidget {
                 // By default our  icon color is white
                 color: kTextColor,
               ),
-              onPressed: () {},
+              onPressed: ()  {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return CartScreen();
+                    },
+                  ),
+                );
+              },
             ),
             SizedBox(width: kDefaultPaddin / 2),
           ],
@@ -65,24 +78,30 @@ class Body extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: kDefaultPaddin),
             child: GridView.builder(
-                itemCount: products.length,
+                itemCount: store.products.length,
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
                   mainAxisSpacing: kDefaultPaddin,
                   crossAxisSpacing: kDefaultPaddin,
                   childAspectRatio: 0.75,
                 ),
-                itemBuilder: (context, index) => ItemCard(
-                      product: products[index],
-                      press: () => Navigator.push(
+                itemBuilder: (context, index) {
+                  return ItemCard(
+                    product: store.products[index],
+                    press: () {
+                      store.setActiveProduct(store.products[index]);
+                        Navigator.push(
                           context,
                           MaterialPageRoute(
-                          builder: (context) {
-                          return DetailsScreen(product: products[index],);
-                          },
+                            builder: (context) {
+                              return DetailsScreen();
+                            },
                           ),
-                          ),
-                          )
+                        );
+                    }
+                  );
+
+                }
             ),
                     )
         ),

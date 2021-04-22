@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/constants.dart';
 import 'package:flutter_app/models/Products.dart';
+import 'package:provider/provider.dart';
+
+import '../myStore.dart';
 
 class ColorAndSize extends StatelessWidget {
   const ColorAndSize({
@@ -12,6 +15,7 @@ class ColorAndSize extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var store = Provider.of<myStore>(context);
     return Row(
       children: <Widget>[
         Expanded(
@@ -36,7 +40,7 @@ class ColorAndSize extends StatelessWidget {
                   children: [
                     TextSpan(text: "Size\n"),
                     TextSpan(
-                      text: "${product.size} inch",
+                      text: "${store.getBasketQty()} inch",
                       style: Theme.of(context).textTheme.headline5.copyWith(fontWeight: FontWeight.bold),
                     )
                   ]

@@ -7,17 +7,20 @@ import 'package:flutter_app/details/product_title_with_image.dart';
 import 'package:flutter_app/models/Products.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
+import '../myStore.dart';
 import 'cart_counter.dart';
 import 'counter_with_fav_btn.dart';
 import 'description.dart';
 
 class DetailBody extends StatelessWidget {
-  final Products product;
 
-  const DetailBody({Key key, this.product}) : super(key: key);
+  const DetailBody({Key key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    var store = Provider.of<myStore>(context);
+
     Size size = MediaQuery.of(context).size;
     return SingleChildScrollView(
       child: Column(
@@ -39,9 +42,9 @@ class DetailBody extends StatelessWidget {
                   ),
                   child: Column(
                     children: <Widget>[
-                      ColorAndSize(product: product),
+                      ColorAndSize(product: store.activeProduct),
                       SizedBox(height: kDefaultPaddin/2),
-                      Description(product: product),
+                      Description(product: store.activeProduct),
                       SizedBox(height: kDefaultPaddin/2),
                       CounterWithFavBtn(),
                       SizedBox(height: kDefaultPaddin/2),
@@ -50,7 +53,7 @@ class DetailBody extends StatelessWidget {
                     ],
                   )
                 ),
-                ProductTitleWithImage(product: product)
+                ProductTitleWithImage(product: store.activeProduct)
               ],
             )
           )

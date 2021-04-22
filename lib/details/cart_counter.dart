@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../constants.dart';
+import '../myStore.dart';
 
 class CartCounter extends StatefulWidget {
   @override
@@ -11,6 +13,7 @@ class _CartCounterState extends State<CartCounter> {
   int numOfItems = 1;
   @override
   Widget build(BuildContext context) {
+    var store = Provider.of<myStore>(context);
     return Row(
       children: <Widget>[
         buildOutlineButton(
@@ -21,6 +24,7 @@ class _CartCounterState extends State<CartCounter> {
             {
               setState(() {
                 numOfItems--;
+                store.removeBasket(store.activeProduct);
               });
             }
 
@@ -37,7 +41,9 @@ class _CartCounterState extends State<CartCounter> {
           icon: Icons.add,
           press: () {
             setState(() {
+              store.addOneItemBasket(store.activeProduct);
               numOfItems++;
+              
             });
           },
         ),

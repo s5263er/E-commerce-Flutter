@@ -6,18 +6,18 @@ import 'package:flutter_app/shopping_cart/cartScreen.dart';
 //import 'package:flutter_svg/flutter_svg.dart';
 
 class DetailsScreen extends StatelessWidget {
-  final Products product;
 
 
 
 
-  const DetailsScreen({Key key, this.product, List cartList}) : super(key: key);
+
+  const DetailsScreen({Key key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: kPrimaryColor,
       appBar: buildAppBar(context),
-      body: DetailBody(product: product),
+      body: DetailBody(),
     );
   }
 
