@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/constants.dart';
 import 'package:flutter_app/details/detailbody.dart';
 import 'package:flutter_app/models/Products.dart';
+import 'package:flutter_app/shopping_cart/cartScreen.dart';
 //import 'package:flutter_svg/flutter_svg.dart';
 
 class DetailsScreen extends StatelessWidget {
@@ -10,7 +11,7 @@ class DetailsScreen extends StatelessWidget {
 
 
 
-  const DetailsScreen({Key key, this.product}) : super(key: key);
+  const DetailsScreen({Key key, this.product, List cartList}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,7 +32,7 @@ class DetailsScreen extends StatelessWidget {
       actions: <Widget> [
         IconButton(
           icon: Icon(Icons.shopping_cart, color: Colors.white),
-          onPressed: () => Navigator.pop(context),
+          onPressed: () {},
         ),
         SizedBox(width: kDefaultPaddin /2),
       ]

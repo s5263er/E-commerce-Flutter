@@ -24,6 +24,7 @@ class ProductTitleWithImage extends StatelessWidget {
           ),
           SizedBox(height: kDefaultPaddin,),
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget> [
               RichText(
                 text: TextSpan(
@@ -34,8 +35,11 @@ class ProductTitleWithImage extends StatelessWidget {
                 ),
               ),
               SizedBox(width: kDefaultPaddin),
-              Expanded(
-                child: Image.network(product.image, fit: BoxFit.fill),
+              Container(
+                alignment: Alignment.bottomRight,
+                width: 200,
+                height: 200,
+                child: Image.asset(product.image),
               ),
             ],
           )

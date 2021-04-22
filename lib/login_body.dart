@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/details/details_screen.dart';
 import 'package:flutter_app/login_background.dart';
 import 'package:flutter_app/models/Products.dart';
+import 'package:flutter_app/products/home_screen.dart';
 import 'package:flutter_app/signup_screen.dart';
 import 'package:flutter_app/already_have_an_account_acheck.dart';
 import 'package:flutter_app/rounded_button.dart';
@@ -67,7 +68,7 @@ class Body extends StatelessWidget {
                 context,
                    MaterialPageRoute(
                         builder: (context) {
-                    return DetailsScreen(product: products[0],);
+                    return HomeScreen();
                                     },
                       ),
                     );},
