@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/models/Products.dart';
 import 'package:flutter_app/shopping_cart/cartScreen.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -10,16 +11,23 @@ import 'body.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_app/myStore.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
+
+
+  @override
+  _HomeScreenState createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
+    var store = Provider.of<myStore>(context);
 
     return Scaffold(
       appBar: buildTest(),
       body: Body(),
     );
   }
-
 
   AppBar buildTest(){
     return AppBar(
@@ -33,6 +41,7 @@ class HomeScreen extends StatelessWidget {
 
     );
   }
+
   AppBar buildAppBar(context) {
     return AppBar(
       backgroundColor: Colors.white,
@@ -40,25 +49,7 @@ class HomeScreen extends StatelessWidget {
 
 
       actions: <Widget>[
-        Container(
-          width: 350,
-          height: 20,
-          child: TextField(
-            
-              decoration: InputDecoration(
-                suffixIcon: IconButton(
-                  icon: SvgPicture.asset(
-                    "assets/search.svg",
-                    // By default our  icon color is white
-                    color: kTextColor,
-                  ),
-                  onPressed: () {},
-                ),
-              border: OutlineInputBorder(borderRadius: BorderRadius.circular(30.0)),
-               hintText: 'Search...',
-          ),
-          ),
-        ),
+
         /*IconButton(
           icon: SvgPicture.asset(
             "assets/search.svg",

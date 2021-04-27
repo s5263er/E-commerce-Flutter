@@ -8,9 +8,6 @@ import 'package:flutter_app/shopping_cart/cartScreen.dart';
 class DetailsScreen extends StatelessWidget {
 
 
-
-
-
   const DetailsScreen({Key key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -32,7 +29,16 @@ class DetailsScreen extends StatelessWidget {
       actions: <Widget> [
         IconButton(
           icon: Icon(Icons.shopping_cart, color: Colors.white),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) {
+                  return CartScreen();
+                },
+              ),
+            );
+          },
         ),
         SizedBox(width: kDefaultPaddin /2),
       ]

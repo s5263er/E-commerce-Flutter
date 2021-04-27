@@ -11,6 +11,8 @@ class AddToCart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: kDefaultPaddin),
       child: Row(
@@ -25,7 +27,9 @@ class AddToCart extends StatelessWidget {
             ),
             child: IconButton(
               icon: SvgPicture.asset("assets/icons/add_to_cart.svg",color: kPrimaryColor,),
-              onPressed: () {},
+              onPressed: () {
+                Scaffold.of(context).showSnackBar(SnackBar(content: Text('Item added successfully')));
+              },
             ),
           ),
           Expanded(
@@ -35,7 +39,10 @@ class AddToCart extends StatelessWidget {
               child: FlatButton(
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
                 color: kPrimaryColor,
-                onPressed: () {},
+                onPressed: () {
+                  //showAlertDialog('title', 'msg');
+                  Scaffold.of(context).showSnackBar(SnackBar(content: Text('Item added successfully')));
+                },
                 child: Text(
                     "BUY NOW",
                     style: GoogleFonts.lato(textStyle: TextStyle(fontSize: 17, fontWeight: FontWeight.bold, color: Colors.white))

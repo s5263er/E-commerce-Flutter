@@ -10,7 +10,7 @@ class CartCounter extends StatefulWidget {
 }
 
 class _CartCounterState extends State<CartCounter> {
-  int numOfItems = 1;
+  int numOfItems = 0;
   @override
   Widget build(BuildContext context) {
     var store = Provider.of<myStore>(context);
@@ -20,7 +20,7 @@ class _CartCounterState extends State<CartCounter> {
           icon: Icons.remove,
           press: () {
 
-            if(numOfItems > 1)
+            if(numOfItems > 0)
             {
               setState(() {
                 numOfItems--;

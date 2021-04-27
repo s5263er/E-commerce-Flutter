@@ -25,16 +25,15 @@ class ColorAndSize extends StatelessWidget {
               Text("Color"),
               Row(
                 children: <Widget>[
-                  ColorDot(color: Color(0xFF61615E),),
-                  ColorDot(color: Color(0xFF000000),),
+                  ColorDot(color: Color(0xFF2E7F9A),),
                 ],
               )
             ],
           ),
         ),
         Expanded(
-
-          child: RichText(
+            child: Text(''),
+          /*child: RichText(
               text: TextSpan(
                   style: TextStyle(color: Colors.black12),
                   children: [
@@ -44,7 +43,7 @@ class ColorAndSize extends StatelessWidget {
                       style: Theme.of(context).textTheme.headline5.copyWith(fontWeight: FontWeight.bold),
                     )
                   ]
-              )),
+              )),*/
         )
       ],
     );

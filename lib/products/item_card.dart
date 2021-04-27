@@ -30,10 +30,12 @@ class _ItemCardState extends State<ItemCard> {
                 color: Colors.purple.shade100,
                 borderRadius: BorderRadius.circular(16),
               ),
+
               child: Hero(
                 tag: "${widget.product.id}",
                 child: Image.asset(widget.product.image),
               ),
+
             ),
           ),
           Padding(
