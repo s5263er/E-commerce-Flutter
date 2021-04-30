@@ -13,7 +13,7 @@ class WelcomeScreen extends StatelessWidget {
       appBar: AppBar(
         centerTitle: true,
         title: Text(
-            "AppBar",
+            "TechIst",
             style: GoogleFonts.lato(
               textStyle: styleAppBar,
             ),

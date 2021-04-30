@@ -31,9 +31,19 @@ class _HomeScreenState extends State<HomeScreen> {
 
   AppBar buildTest(){
     return AppBar(
+      leading: IconButton(
+        icon: Icon(Icons.arrow_back_sharp, color: Colors.white),
+        onPressed: () {
+          globalString = 'id1';
+          globaldesc = false;
+          globalasc = false;
+          Navigator.of(context).pop();
+        }
+      ),
+
       centerTitle: true,
       title: Text(
-        "AppBar",
+        "TechIst",
         style: GoogleFonts.lato(
           textStyle: styleAppBar,
         ),

@@ -155,7 +155,8 @@ class  CartScreen extends StatelessWidget {
                       Row(
                         children: <Widget>[
                           Expanded(flex: 2,
-                            child: Image.asset(store.baskets[i].image),
+                            child: Image.network(store.baskets[i].image),
+
 
                           ),
                           Expanded(flex: 2,child: Text(store.baskets[i].title + " Price: " + store.baskets[i].price.toString() + "\$")),

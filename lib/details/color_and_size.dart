@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/constants.dart';
 import 'package:flutter_app/models/Products.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 import '../myStore.dart';
+import '../textStyle.dart';
 
 class ColorAndSize extends StatelessWidget {
   const ColorAndSize({
@@ -19,31 +22,74 @@ class ColorAndSize extends StatelessWidget {
     return Row(
       children: <Widget>[
         Expanded(
+          flex: 0,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Text("Color"),
               Row(
                 children: <Widget>[
-                  ColorDot(color: Color(0xFF2E7F9A),),
+                  RatingBar.builder(
+                    initialRating: product.rating.truncateToDouble(),
+                    itemCount: 5,
+                    itemBuilder: (context, index) {
+                      switch (index) {
+                        case 0:
+                          return Icon(
+                            Icons.sentiment_very_dissatisfied,
+                            color: Colors.red,
+                          );
+                        case 1:
+                          return Icon(
+                            Icons.sentiment_dissatisfied,
+                            color: Colors.redAccent,
+                          );
+                        case 2:
+                          return Icon(
+                            Icons.sentiment_neutral,
+                            color: Colors.amber,
+                          );
+                        case 3:
+                          return Icon(
+                            Icons.sentiment_satisfied,
+                            color: Colors.lightGreen,
+                          );
+                        case 4:
+                          return Icon(
+                            Icons.sentiment_very_satisfied,
+                            color: Colors.green,
+                          );
+                      }
+                    },
+                    onRatingUpdate: (rating) {
+                      print(rating);
+                    },
+                  ),
                 ],
               )
             ],
           ),
         ),
         Expanded(
-            child: Text(''),
-          /*child: RichText(
+          child: RichText(
+            textAlign: TextAlign.end,
               text: TextSpan(
                   style: TextStyle(color: Colors.black12),
                   children: [
-                    TextSpan(text: "Size\n"),
                     TextSpan(
-                      text: "${store.getBasketQty()} inch",
-                      style: Theme.of(context).textTheme.headline5.copyWith(fontWeight: FontWeight.bold),
+
+                      text: "1 item left in stock",
+                      style: GoogleFonts.lato(
+                        textStyle: TextStyle(
+                          color: kPrimaryColor,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 20,
+                          letterSpacing: -1,
+                          fontStyle: FontStyle.italic,
+                        )
+                      ),
                     )
                   ]
-              )),*/
+              )),
         )
       ],
     );

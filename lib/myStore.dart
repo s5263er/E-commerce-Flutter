@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import "package:flutter/material.dart";
 import 'package:flutter_app/models/Products.dart';
+import 'package:flutter_app/products/constants.dart';
 import 'package:flutter_app/products/home_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -17,16 +18,18 @@ class MyApps extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+
     return FutureBuilder<List<Products>>(
-      future: fetchPhotos(http.Client()),
+      future: getThemes(http.Client()),
       builder: (context, snapshot) {
 
         if (snapshot.hasError) print(snapshot.error);
         if(snapshot.hasData){
           data += snapshot.data;
         };
-        print("asdjasdas");
-        print(snapshot.data);
+
+
         return snapshot.hasData
             ? HomeScreen()
             : Scaffold(
@@ -55,10 +58,15 @@ class myStore extends ChangeNotifier
 
   List<Products> _products = [];
   List<Products> _computers = [];
+  List<Products> _tvs = [];
+  List<Products> _cameras = [];
+  List<Products> _phones = [];
   List<Products> _baskets = [];
   Products _activeProduct = null;
   int totalCost = 0;
   String name,city;
+  String username;
+  bool login = false;
   myStore() {
 
     /* _products = [ Products(id: 1, title: "Office Code", price: 234, size: 1, description: dummyText, image: "assets/bag_1.png"),
@@ -72,7 +80,19 @@ class myStore extends ChangeNotifier
 
     _products = data;
     _computers = data;
-    _computers = _computers.where((p) => p.title == "product2").toList();
+    _tvs = data;
+    _cameras = data;
+    _phones = data;
+    _computers = _computers.where((p) => p.categoryid == 0).toList();
+    _tvs = _tvs = _tvs.where((p) => p.categoryid == 1).toList();
+    _cameras = _cameras.where((p) => p.categoryid == 2).toList();
+    _phones = _phones.where((p) => p.categoryid == 3).toList();
+
+    /*_products = _products.where((element) => element.price >= globalmin && element.price <= globalmax).toList();
+    _computers = _computers.where((element) => element.price >= globalmin && element.price <= globalmax).toList();
+    _tvs = _tvs.where((element) => element.price >= globalmin && element.price <= globalmax).toList();
+    _cameras = _cameras.where((element) => element.price >= globalmin && element.price <= globalmax).toList();
+    _phones = _phones.where((element) => element.price >= globalmin && element.price <= globalmax).toList();*/
 
     notifyListeners();
 
@@ -81,6 +101,10 @@ class myStore extends ChangeNotifier
   }
 
   List<Products> get computers => _computers;
+  List<Products> get phones => _phones;
+  List<Products> get cameras => _cameras;
+  List<Products> get tvs => _tvs;
+
 
 
 
@@ -146,6 +170,10 @@ class myStore extends ChangeNotifier
     }
     return total;
   }
+  getSortedList(List <Products> products2)
+  {
+    products2.sort((b,a) => a.price.compareTo(b.price));
+  }
 
 }
 
@@ -158,10 +186,44 @@ List<Products> parsePhotos(String responseBody) {
 
 Future<List<Products>> fetchPhotos(http.Client client) async {
   final response = await client
-      .get(Uri.parse('https://run.mocky.io/v3/4fd95deb-0b74-4a60-91fe-a075b3a2d412'));
+      .get(Uri.parse('http://localhost:5000/Product/getall'));
 
   // Use the compute function to run parsePhotos in a separate isolate.
   return compute(parsePhotos, response.body);
+}
+
+Future<List<Products>> getThemes(http.Client client) async {
+  print("deneme2");
+  String url = 'http://127.0.0.1:5000/Product/getall';
+
+  print("deneme4");
+  final response = await http.get(Uri.parse(url), headers: {
+    'Content-Type': 'application/json',
+    'Accept': 'application/json',
+  });
+  //print('Token : ${token}');
+  //print(response);
+
+
+
+  print(response.statusCode);
+  if (response.statusCode == 200) {
+    Map<String, dynamic> map = json.decode(response.body);
+    //return map2.map<Products>((json) => Products.fromJson(json)).toList();
+
+
+
+    //return Products.fromJson(map);
+
+    List<dynamic> data = map["data"];
+
+    //data.fromJson();
+    //print(data[4]);
+    print("deneme3");
+    return data.map((obj) => Products.fromJson(obj)).toList();
+  } else {
+    throw Exception('Failed to load themes');
+  }
 }
 
 /*class Album {

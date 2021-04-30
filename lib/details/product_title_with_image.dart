@@ -39,7 +39,7 @@ class ProductTitleWithImage extends StatelessWidget {
                 alignment: Alignment.bottomRight,
                 width: 200,
                 height: 200,
-                child: Image.asset(product.image),
+                child: Image.network(product.image),
               ),
             ],
           )

@@ -43,11 +43,11 @@ class DetailBody extends StatelessWidget {
                   child: Column(
                     children: <Widget>[
                       ColorAndSize(product: store.activeProduct),
-                      SizedBox(height: kDefaultPaddin/2),
+                      SizedBox(height: kDefaultPaddin/4),
                       Description(product: store.activeProduct),
-                      SizedBox(height: kDefaultPaddin/2),
+                      SizedBox(height: kDefaultPaddin/4),
                       CounterWithFavBtn(),
-                      SizedBox(height: kDefaultPaddin/2),
+                      SizedBox(height: kDefaultPaddin/4),
                       AddToCart(),
                       
                     ],

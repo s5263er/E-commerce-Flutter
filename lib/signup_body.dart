@@ -1,5 +1,221 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/models/User.dart';
+import 'package:flutter_app/login_screen.dart';
+import 'package:flutter_app/myStore.dart';
+import 'package:flutter_app/signup_background.dart';
+import 'package:flutter_app/or_divider.dart';
+import 'package:flutter_app/signup_screen.dart';
+import 'package:flutter_app/social_icon.dart';
+import 'package:flutter_app/already_have_an_account_acheck.dart';
+import 'package:flutter_app/rounded_button.dart';
+import 'package:flutter_app/rounded_input_field.dart';
+import 'package:flutter_app/rounded_password_field.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:flutter_app/welcome.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'constants.dart';
+import 'textStyle.dart';
+
+class Body extends StatelessWidget {
+  final _form = GlobalKey<FormState>(); //for storing form state.
+  String name,surname,username,phoneNumber,email,password;
+//saving form after validation
+  void _saveForm(context) {
+    final isValid = _form.currentState.validate();
+    if (!isValid) {
+      return;
+    }
+    else
+    {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) {
+            return RegApp(username: username,name: name,password: password,email: email,surname: surname,phoneNumber: phoneNumber,);
+          },
+        ),
+      );
+
+    }
+  }
+  @override
+  Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+    return Background(
+      child: SingleChildScrollView(
+        child: Form(
+          key: _form,
+          child: Column(
+
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              SizedBox(
+                width: 150,
+                child: Align(
+                  alignment: Alignment.topLeft,
+                  child:  RoundedButton(
+                    text: "BACK",
+                    press: () { Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return WelcomeScreen();
+                        },
+                      ),
+                    );},
+                  ),
+                ),
+              ),
+              Text(
+                  "SIGN-UP",
+                  style: GoogleFonts.lato(
+                    textStyle: stylePost,
+                  )
+              ),
+              SizedBox(height: size.height * 0.03),
+
+              TextFormField(
+
+                decoration: InputDecoration(
+                  icon: Icon(
+                    Icons.person,
+                    color: kPrimaryColor,
+                  ),
+                  labelText: "Name",
+                  border: UnderlineInputBorder(),
+                ),
+                onChanged: (valueN) {name = valueN;},
+                validator: (text){
+                  if (!(text.length > 3) && (text.isNotEmpty || text != null)) {
+                    return "Enter valid name of more then 3 characters!";
+                  }
+                  return null;
+                },
+
+              ),
+
+              TextFormField(
+
+                decoration: InputDecoration(
+                  icon: Icon(
+                    Icons.person,
+                    color: kPrimaryColor,
+                  ),
+                  labelText: "Surname",
+                  border: UnderlineInputBorder(),
+                ),
+                onChanged: (valueS) {surname = valueS;},
+                validator: (text){
+                  if (!(text.length > 3) && (text.isNotEmpty || text != null)) {
+                    return "Enter valid surname of more then 3 characters!";
+                  }
+                  return null;
+                },
+
+              ),
+
+              TextFormField(
+
+                decoration: InputDecoration(
+                  icon: Icon(
+                    Icons.person_pin_circle,
+                    color: kPrimaryColor,
+                  ),
+                  labelText: "Username",
+                  border: UnderlineInputBorder(),
+                ),
+                onChanged: (valueU) {username = valueU;},
+                validator: (text){
+                  if (!(text.length > 5) && (text.isNotEmpty || text != null)) {
+                    return "Enter valid Username of more then 5 characters!";
+                  }
+                  return null;
+                },
+
+              ),
+              TextFormField(
+
+                decoration: InputDecoration(
+                  icon: Icon(
+                    Icons.mail,
+                    color: kPrimaryColor,
+                  ),
+                  labelText: "Email",
+                  border: UnderlineInputBorder(),
+
+                ),
+                keyboardType: TextInputType.emailAddress,
+                onChanged: (valueE) {email = valueE;},
+                validator: (text){
+                  if (!EmailValidator.validate(text)) {
+                    return "Email is not valid!";
+                  }
+                  return null;
+                },
+
+              ),
+              TextFormField(
+
+                decoration: InputDecoration(
+                  icon: Icon(
+                    Icons.phone,
+                    color: kPrimaryColor,
+                  ),
+                  labelText: "Phone Number",
+                  border: UnderlineInputBorder(),
+                ),
+                keyboardType: TextInputType.phone,
+                onChanged: (valuePh) {phoneNumber = valuePh;},
+                validator: (text){
+                  if (!(text.length > 5) && (text.isNotEmpty || text != null)) {
+                    return "Enter valid Phone Number of 11 digit!";
+                  }
+                  return null;
+                },
+
+              ),
+
+
+
+
+              TextFormField(
+                obscureText: true,
+                decoration: InputDecoration(
+                  icon: Icon(
+                    Icons.lock,
+                    color: kPrimaryColor,
+                  ),
+                  labelText: "Password",
+                  border: UnderlineInputBorder(),
+                ),
+                onChanged: (valueP) {password = valueP;},
+                validator: (text){
+                  if (!(text.length > 5) && (text.isNotEmpty || text != null)) {
+                    return "Enter valid Password of more then 5 characters!";
+                  }
+                  return null;
+                },
+
+              ),
+
+              RoundedButton(
+                text: "SIGN-UP",
+                press: ()  => _saveForm(context),
+              ),
+              SizedBox(height: size.height * 0.03),
+
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+/*
+import 'package:email_validator/email_validator.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_app/constants.dart';
 import 'package:flutter_app/login_screen.dart';
 import 'package:flutter_app/signup_background.dart';
@@ -278,4 +494,4 @@ class _BodyState extends State<Body> {
       ),
     );
   }
-}
+}*/

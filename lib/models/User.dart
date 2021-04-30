@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/login_screen.dart';
 import 'package:flutter_app/myStore.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 
 
 class LogApp extends StatelessWidget {
@@ -17,12 +18,17 @@ class LogApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var store = Provider.of<myStore>(context);
+
     return FutureBuilder<bool>(
       future: login(username,password),
       builder: (context, snapshot) {
 
         if (snapshot.hasError) print(snapshot.error);
         print(snapshot.data);
+        if(snapshot.hasData){
+          store.login = snapshot.data;
+        }
 
         if(!snapshot.hasData)
         {
@@ -51,7 +57,7 @@ class LogApp extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text("Your Username or Password is wrong pleas try again",
+                    Text("Your Username or Password is wrong please try again",
                       style: TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.bold,
@@ -358,7 +364,7 @@ Future<bool> login(String username, String password) async {
 
 
   http.Response response = await http.post(
-      Uri.parse("http://10.0.2.2:5000/Authentication/login"),
+      Uri.parse("http://127.0.0.1:5000/Authentication/login"),
       body: json.encode(loginData),
       headers: {'Content-Type': 'application/json; charset=utf-8'}
   );
@@ -379,9 +385,9 @@ Future<bool> login(String username, String password) async {
     final Map<String, dynamic> responseData = json.decode(response.body);
     result = await responseData['success'];
 
-    };
+  };
   return  result;
-  }
+}
 
 
 
@@ -401,7 +407,7 @@ Future<bool> Register(String username, String password,String name, String surna
 
 
   http.Response response = await http.post(
-      Uri.parse("http://10.0.2.2:5000/Authentication/register"),
+      Uri.parse("http://127.0.0.1:5000/Authentication/register"),
       body: json.encode(registerData),
       headers: {'Content-Type': 'application/json; charset=utf-8'}
   );

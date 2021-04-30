@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/constants.dart';
 import '../models/Products.dart';
 import 'constants.dart';
 
@@ -25,21 +26,23 @@ class _ItemCardState extends State<ItemCard> {
         children: <Widget>[
           Expanded(
             child: Container(
-              padding: EdgeInsets.all(kDefaultPaddin),
+              padding: EdgeInsets.all(20),
               decoration: BoxDecoration(
-                color: Colors.purple.shade100,
+                color: Colors.white,
                 borderRadius: BorderRadius.circular(16),
+                border: Border.all(width: 2, color: kPrimaryColor)
+
               ),
 
               child: Hero(
                 tag: "${widget.product.id}",
-                child: Image.asset(widget.product.image),
+                child: Image.network(widget.product.image),
               ),
 
             ),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: kDefaultPaddin / 4),
+            padding: const EdgeInsets.symmetric(vertical: 20 / 4),
             child: Text(
               // products is out demo list
               widget.product.title,
