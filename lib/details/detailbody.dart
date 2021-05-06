@@ -46,7 +46,7 @@ class DetailBody extends StatelessWidget {
                       SizedBox(height: kDefaultPaddin/4),
                       Description(product: store.activeProduct),
                       SizedBox(height: kDefaultPaddin/4),
-                      CounterWithFavBtn(),
+                      CounterWithFavBtn(product: store.activeProduct),
                       SizedBox(height: kDefaultPaddin/4),
                       AddToCart(),
                       

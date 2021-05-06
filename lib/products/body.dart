@@ -68,8 +68,6 @@ class _BodyState extends State<Body> {
     else{
 
       _products = store.products;
-
-
     }
 
     if(globalasc == true)

@@ -9,6 +9,8 @@ import 'package:flutter_app/myStore.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 
+import 'Products.dart';
+
 
 class LogApp extends StatelessWidget {
   String username;
@@ -329,6 +331,7 @@ class MyHttpOverrides extends HttpOverrides{
 class User {
   String name, surname, username,phoneNumber, mailAddress;
   int id;
+  List <Products> basket = [];
 
   User({
     this.id,
@@ -337,6 +340,7 @@ class User {
     this.username,
     this.mailAddress,
     this.phoneNumber,
+    this.basket,
 
   });
 
@@ -364,7 +368,7 @@ Future<bool> login(String username, String password) async {
 
 
   http.Response response = await http.post(
-      Uri.parse("http://127.0.0.1:5000/Authentication/login"),
+      Uri.parse("http://10.0.2.2:5000/Authentication/login"),
       body: json.encode(loginData),
       headers: {'Content-Type': 'application/json; charset=utf-8'}
   );
@@ -407,7 +411,7 @@ Future<bool> Register(String username, String password,String name, String surna
 
 
   http.Response response = await http.post(
-      Uri.parse("http://127.0.0.1:5000/Authentication/register"),
+      Uri.parse("http://10.0.2.2:5000/Authentication/register"),
       body: json.encode(registerData),
       headers: {'Content-Type': 'application/json; charset=utf-8'}
   );

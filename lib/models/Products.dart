@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
+import 'Commentler.dart';
+
 
 
 
@@ -11,7 +13,7 @@ class Products {
   int price, size, id;
   int categoryid;
   int rating;
-  String comments;
+  List<Commentler> comments;
 
   Products({
     this.id,
@@ -39,9 +41,7 @@ class Products {
 
       price: json["price"] as int,
       rating: json["rating"] as int,
-      comments: json["comments"],
-
-
+      //comments: json["comments"] as List,
 
     );
   }

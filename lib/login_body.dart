@@ -64,7 +64,7 @@ class _BodyState extends State<Body> {
               ),
             ),
             SizedBox(height: size.height * 0.03),
-            Image.asset('logo.png',height: size.height * 0.20,),
+            Image.network('https://www.iconsdb.com/icons/preview/purple/account-login-xxl.png',height: size.height * 0.20,),
             SizedBox(height: size.height * 0.03),
             RoundedInputField(
               hintText: "Username",
