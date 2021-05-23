@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/constants.dart';
+import 'package:flutter_app/products/constants.dart';
+
 import 'package:flutter_app/details/profile_screen.dart';
 import 'package:flutter_app/search/search_history.dart';
 import 'package:flutter_app/products/constants.dart';
@@ -16,8 +17,6 @@ import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
 
 class Body extends StatefulWidget {
-
-
   _BodyState createState() => _BodyState();
 }
 
@@ -27,6 +26,7 @@ List <Products> Sorter(List <Products> products)
 }
 
 class _BodyState extends State<Body> {
+
   bool kalkan = false;
 
 
@@ -46,6 +46,16 @@ class _BodyState extends State<Body> {
 
     var store = Provider.of<myStore>(context);
     List <Products> _products = [];
+    if(filter == true){
+      //store.setFilters();
+
+      print("$_products ilki");
+      store.setFilters();
+      print(globalmax);
+      print(_products);
+    }
+    store.setFilters();
+
 
     if(globalString == "id2")
       {
@@ -65,26 +75,20 @@ class _BodyState extends State<Body> {
       _products = store.phones;
 
     }
+    else if(globalString == "id6")
+      {
+        _products = queryproducts;
+      }
     else{
 
       _products = store.products;
     }
 
-    if(globalasc == true)
-      {
-        print("asc");
-        _products.sort((b,a) => a.price.compareTo(b.price));
-        globalasc = false;
-      }
-    if(globaldesc == true)
-      {
-        _products.sort((a, b) => a.price.compareTo(b.price));
-        print("desc");
-        globaldesc = false;
-      }
-    //List <Products> _products2 = _products.where((element) => element.price >= globalmin && element.price <= globalmax).toList();
 
-    _products = _products.where((element) => element.price >= _lowerValue && element.price <= _upperValue).toList();
+
+    //
+
+
 
 
     //print('lalalala ${globalmax}');
@@ -156,7 +160,7 @@ class _BodyState extends State<Body> {
                   //store.products.sort(priceComparator);
                 },
               ),*/
-            IconButton(
+            /*IconButton(
               icon: Icon(Icons.search_sharp),
               onPressed: ()  {
                 globalmin = 0;
@@ -173,7 +177,7 @@ class _BodyState extends State<Body> {
                   ),
                 );
               },
-            ),
+            ),*/
 
               /*
               IconButton(
@@ -183,7 +187,7 @@ class _BodyState extends State<Body> {
               ),
               */
 
-              IconButton(
+              /*IconButton(
                 icon: Icon(Icons.account_circle),
                 color: Colors.black,
                 onPressed: ()  {
@@ -200,9 +204,66 @@ class _BodyState extends State<Body> {
                     ),
                   );
                 },
+              ),*/
+              IconButton(
+                  icon: Icon(Icons.all_inclusive_rounded),
+                  iconSize: 30,
+                  splashRadius: 30,
+                  color: Colors.white70,
+                  enableFeedback: false,
+                  onPressed: (){
+                    setState(() {
+                      globalString = 'id1';
+                    });
+                  }
+              ),
+              IconButton(
+                  icon: Icon(Icons.computer),
+                  splashRadius: 30,
+                  iconSize: 30,
+                  color: Colors.white70,
+                  onPressed: (){
+                    setState(() {
+                      globalString = 'id2';
+                    });
+                  }
               ),
 
               IconButton(
+                  icon: Icon(Icons.tv),
+                  iconSize: 30,
+                  splashRadius: 30,
+                  color: Colors.white70,
+                  onPressed: (){
+                    setState(() {
+                      globalString = 'id3';
+                    });
+                  }
+              ),
+              IconButton(
+                  icon: Icon(Icons.phone_android_rounded),
+                  iconSize: 30,
+                  splashRadius: 30,
+                  color: Colors.white70,
+                  onPressed: (){
+                    setState(() {
+                      globalString = 'id5';
+                    });
+                  }
+              ),
+              IconButton(
+                  icon: Icon(Icons.photo_camera_rounded),
+                  iconSize: 30,
+                  splashRadius: 30,
+                  color: Colors.white70,
+                  onPressed: (){
+                    setState(() {
+                      globalString = 'id4';
+                    });
+                  }
+              ),
+
+              /*IconButton(
                 icon: Icon(Icons.shopping_cart_sharp),
                 onPressed: ()  {
                   globalmin = 0;
@@ -216,7 +277,7 @@ class _BodyState extends State<Body> {
                     ),
                   );
                 },
-              ),
+              ),*/
 
 
 
@@ -229,7 +290,7 @@ class _BodyState extends State<Body> {
         Divider(
           thickness: 8,
           height: 8,
-          color: kPrimaryColor,
+          color: Colors.white38,
         ),
 
 
@@ -237,41 +298,7 @@ class _BodyState extends State<Body> {
         SizedBox(height: 16,),
 
 
-        Expanded(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: GridView.builder(
-                itemCount: _products.length,
-
-
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  mainAxisSpacing: 20,
-                  crossAxisSpacing: 20,
-                  childAspectRatio: 0.75,
-                ),
-
-                itemBuilder: (context, index) {
-                  return ItemCard(
-
-                    product: _products[index],
-                    press: () {
-                      store.setActiveProduct(_products[index]);
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) {
-                              return DetailsScreen();
-                            },
-                          ),
-                        );
-                    }
-                  );
-
-                }
-            ),
-                    )
-        ),
+        ItemDisplayer(products: _products, store: store),
         SizedBox(height: 16,),
 
 
@@ -279,6 +306,56 @@ class _BodyState extends State<Body> {
 
     );
 
+  }
+}
+
+class ItemDisplayer extends StatelessWidget {
+  const ItemDisplayer({
+    Key key,
+    @required List<Products> products,
+    @required this.store,
+  }) : _products = products, super(key: key);
+
+  final List<Products> _products;
+  final myStore store;
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: GridView.builder(
+            itemCount: _products.length,
+
+
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              mainAxisSpacing: 20,
+              crossAxisSpacing: 20,
+              childAspectRatio: 0.75,
+            ),
+
+            itemBuilder: (context, index) {
+              return ItemCard(
+
+                product: _products[index],
+                press: () {
+                  store.setActiveProduct(_products[index]);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return DetailsScreen();
+                        },
+                      ),
+                    );
+                }
+              );
+
+            }
+        ),
+                )
+    );
   }
 }
 

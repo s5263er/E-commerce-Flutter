@@ -64,7 +64,7 @@ class _BodyState extends State<Body> {
               ),
             ),
             SizedBox(height: size.height * 0.03),
-            Image.network('https://www.iconsdb.com/icons/preview/purple/account-login-xxl.png',height: size.height * 0.20,),
+            Image.network('https://blog.euromonitor.com/wp-content/uploads/2020/09/Login-2019-1.png',height: size.height * 0.20,),
             SizedBox(height: size.height * 0.03),
             RoundedInputField(
               hintText: "Username",

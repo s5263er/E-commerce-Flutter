@@ -70,7 +70,7 @@ Future<Map<String, dynamic>> login(String username, String password) async {
 
 
   http.Response response = await http.post(
-      Uri.parse("http://127.0.0.1:5000/Authentication/login"),
+      Uri.parse("http://10.0.2.2:5000/Authentication/login"),
       body: json.encode(loginData),
       headers: {'Content-Type': 'application/json; charset=utf-8'}
   );

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/constants.dart';
+import 'package:flutter_app/products/constants.dart';
+
 import 'package:flutter_app/models/Products.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -15,7 +16,6 @@ class ColorAndSize extends StatelessWidget {
   }) : super(key: key);
 
   final Products product;
-
   @override
   Widget build(BuildContext context) {
     var store = Provider.of<myStore>(context);

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../constants.dart';
+import 'package:flutter_app/products/constants.dart';
+
 import '../myStore.dart';
 import '../size_config.dart';
 /*

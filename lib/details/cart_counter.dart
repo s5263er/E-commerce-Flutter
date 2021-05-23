@@ -1,19 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/products/constants.dart';
+import 'package:flutter_app/shopping_cart/cartScreen.dart';
 import 'package:provider/provider.dart';
 
-import '../constants.dart';
+import 'package:flutter_app/products/constants.dart';
+
 import '../myStore.dart';
 
 class CartCounter extends StatefulWidget {
   @override
   _CartCounterState createState() => _CartCounterState();
+  const CartCounter({
+    Key key,
+    @required this.no
+  }) : super(key: key);
+  final int no;
 }
 
 class _CartCounterState extends State<CartCounter> {
+
+
   int numOfItems = 0;
   @override
   Widget build(BuildContext context) {
     var store = Provider.of<myStore>(context);
+    getCart(globalToken);
+
     return Row(
       children: <Widget>[
         buildOutlineButton(
@@ -31,7 +43,7 @@ class _CartCounterState extends State<CartCounter> {
           },
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: kDefaultPaddin/2),
+          padding: const EdgeInsets.symmetric(horizontal: 20 /2),
           child: Text(
             numOfItems.toString().padLeft(2,"0"),
             style: Theme.of(context).textTheme.headline6,
@@ -41,9 +53,10 @@ class _CartCounterState extends State<CartCounter> {
           icon: Icons.add,
           press: () {
             setState(() {
-              store.addOneItemBasket(store.activeProduct);
               numOfItems++;
-              
+              store.addOneItemBasket(store.activeProduct,numOfItems);
+              print(store.baskets);
+
             });
           },
         ),

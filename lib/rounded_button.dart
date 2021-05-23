@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/constants.dart';
+import 'package:flutter_app/products/constants.dart';
+
 import 'package:google_fonts/google_fonts.dart';
 import 'textStyle.dart';
 class RoundedButton extends StatelessWidget {

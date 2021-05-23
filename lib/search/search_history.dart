@@ -3,7 +3,8 @@
 import 'package:animated_button/animated_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app/constants.dart';
+import 'package:flutter_app/products/constants.dart';
+
 import 'package:flutter_app/details/detailbody.dart';
 import 'package:flutter_app/details/details_screen.dart';
 import 'package:flutter_app/models/Products.dart';
@@ -16,6 +17,7 @@ import 'package:flutter_app/products/body.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 import '../myStore.dart';
 import '../textStyle.dart';
+import 'package:lite_rolling_switch/lite_rolling_switch.dart';
 
 
 class Search extends StatefulWidget {
@@ -29,222 +31,83 @@ class _SearchState extends State<Search> {
   @override
   Widget build(BuildContext context) {
     var store = Provider.of<myStore>(context);
+    List <Products> _products = [];
+
+
+    if(globalString == "id2")
+    {
+      _products = store.computers;
+
+
+    }
+    else if(globalString == "id3"){
+      _products = store.tvs;
+
+    }
+    else if(globalString == "id4"){
+      _products = store.cameras;
+
+    }
+    else if(globalString == "id5"){
+      _products = store.phones;
+
+    }
+    else if(globalString == "id6")
+    {
+      _products = queryproducts;
+    }
+    else{
+
+      _products = store.products;
+    }
+    _products.sort((b,a) => a.rating.compareTo(b.rating));
 
 
     return Scaffold(
-      backgroundColor: Colors.white70,
+      backgroundColor: Color(0xFF3D3D3D),
       appBar: AppBar(
         centerTitle: true,
-        title: Text('Search'),
-        actions: <Widget>[
-          IconButton(icon: Icon(Icons.search), onPressed: () {
-            showSearch(context: context, delegate: DataSearch());
-          }),
-
-        ],
+        title: Text('Filter'),
       ),
 
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          //mainAxisAlignment: MainAxisAlignment.end,
-            //crossAxisAlignment: CrossAxisAlignment.,
-            children: <Widget>[
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children:<Widget> [
+                  Center(
 
 
-              Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: <Widget>[
-                      IconButton(
-                        icon: Icon(Icons.computer),
-                        iconSize: 100,
-                        onPressed: (){
-                          globalString = 'id2';
-
-                          Navigator.push(
-                            context, MaterialPageRoute(builder: (context)
-                              {
-                                return MyApps();
-                              }
-                          )
-
-                          );
-
-
-/*
-                          Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                          builder: (context) {
-                          return CartScreen();*/
-
-
-
-                        },
-                      ),
-
-                      IconButton(
-                        icon: Icon(Icons.tv),
-                        iconSize: 100,
-                          onPressed: (){
-                            globalString = 'id3';
-
-
-                            Navigator.push(
-                                context, MaterialPageRoute(builder: (context)
-                            {
-                              return MyApps();
-                            }
-                            )
-
-                            );
-
-
-                          }
-                      ),
-                    ],
+                    child: LiteRollingSwitch(
+                    //initial value
+                    value: false,
+                    textOn: 'Deactivate',
+                    textOff: 'Activate',
+                    colorOn: Colors.black,
+                    colorOff: Colors.white38,
+                    iconOn: Icons.filter_list_alt,
+                    iconOff: Icons.remove_circle_outline,
+                    textSize: 16.0,
+                    onChanged: (bool state) {
+                      filter = state;
+                      if(filter == false)
+                        {
+                          globalmin = 0;
+                          globalmax = 5000;
+                          globalasc = false;
+                          globaldesc = false;
+                        }
+                      print('Current State of SWITCH IS: $state');
+                    },
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Text(
-                        'Computer',
-                        style: GoogleFonts.lato(
-                          textStyle: TextStyle(
-                            fontSize: 20,
-                            color: Colors.white,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ),
-                      SizedBox(width: 16,),
-                      Text(
-                        'Television',
-                        style: GoogleFonts.lato(
-                          textStyle: TextStyle(
-                            fontSize: 20,
-                            color: Colors.white,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-              SizedBox(height: 25,),
-
-              Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-
-                    children: <Widget>[
-                      IconButton(
-                        icon: Icon(Icons.photo_camera_rounded),
-                        iconSize: 100,
-                          onPressed: (){
-                            globalString = 'id4';
-
-                            Navigator.push(
-                                context, MaterialPageRoute(builder: (context)
-                            {
-                              return MyApps();
-                            }
-                            )
-
-                            );
-
-
-                          }
-                      ),
-                      IconButton(
-                        icon: Icon(Icons.phone_android_rounded),
-                        iconSize: 100,
-                          onPressed: (){
-                            globalString = 'id5';
-
-                            Navigator.push(
-                                context, MaterialPageRoute(builder: (context)
-                            {
-                              return MyApps();
-                            }
-                            )
-
-                            );
-
-
-                          }
-                      ),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Text(
-                        'Camera',
-                        style: GoogleFonts.lato(
-                          textStyle: TextStyle(
-                            fontSize: 20,
-                            color: Colors.white,
-                            fontWeight: FontWeight.w600,
-                          ),
-                      ),
-                      ),
-                      SizedBox(width: 16,),
-                      Text(
-                        'Smart phone',
-                        style: GoogleFonts.lato(
-                          textStyle: TextStyle(
-                            fontSize: 20,
-                            color: Colors.white,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ),
-                    ],
                   ),
 
 
-                ],
-              ),
-              SizedBox(height: 50,),
-              Center(
-                child: AnimatedButton(
-                  color: kPrimaryColor,
-                  shadowDegree: ShadowDegree.dark,
-                  child: Text(
-                    "All Products",
-                    style: GoogleFonts.lato(
-                      textStyle: TextStyle(
-                        fontSize: 22,
-                        color: Colors.white,
-                        fontWeight: FontWeight.w600,
-                      ),
 
-                    ),
-                  ),
-                  onPressed: (){
-                    globalString = 'id1';
 
-                    Navigator.push(
-                        context, MaterialPageRoute(builder: (context)
-                    {
-                      return MyApps();
-                    }
-                    )
 
-                    );
-
-                  },
-                ),
-
-              ),
-
-              Text(
+                  Text(
                 "Price Range",
                 style: GoogleFonts.lato(
                   textStyle: TextStyle(
@@ -256,7 +119,7 @@ class _SearchState extends State<Search> {
                 )
 
                 ),
-              ),
+              ) ,
               RangeSlider(
                 activeColor: kPrimaryColor,
                 inactiveColor: Colors.white,
@@ -302,29 +165,132 @@ class _SearchState extends State<Search> {
                   print('switched to: $index');
                 },
               ),
-              /*
-              ToggleButtons(
-                children: <Widget>[
-                  Icon(Icons.ac_unit),
-                  Icon(Icons.call),
-                  Icon(Icons.cake),
-                ],
-                onPressed: (int index) {
-                  setState(() {
-                    for (int buttonIndex = 0; buttonIndex < isSelected.length; buttonIndex++) {
-                      if (buttonIndex == index) {
-                        isSelected[buttonIndex] = true;
-                      } else {
-                        isSelected[buttonIndex] = false;
-                      }
-                    }
-                  });
-                },
-                isSelected: isSelected,
-              ),
-*/
+                  AnimatedButton(
+                    color: kPrimaryColor,
+                    shadowDegree: ShadowDegree.dark,
+                    child: Text(
+                      "Apply Filters",
+                      style: GoogleFonts.lato(
+                        textStyle: TextStyle(
+                          fontSize: 22,
+                          color: Colors.white,
+                          fontWeight: FontWeight.w600,
+                        ),
 
-            ],
+                      ),
+                    ),
+                    onPressed: (){
+                      globalString = "id1";
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return MyApps();
+                          },
+                        ),
+                      );
+                    },
+                  ),
+                  Divider(height: 5, thickness: 2, color: Colors.white70,),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Best Deals Based on User Reviews",
+                        style: GoogleFonts.lato(
+                            textStyle: TextStyle(
+                              color: Colors.white70,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 20,
+                              letterSpacing: -1,
+                              fontStyle: FontStyle.italic,
+                            )
+
+                        ),
+                        textAlign: TextAlign.left,
+                      ),
+                    ],
+                  ) ,
+                  Container(
+                    height: 180,
+                    margin: const EdgeInsets.symmetric(vertical: 15),
+                    child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: _products.length,
+                      itemBuilder: (ctx, i) {
+                        return GestureDetector(
+                          onTap: () {
+                            return ItemCard(
+                                product: _products[i],
+                                press: () {
+                                  store.setActiveProduct(_products[i]);
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) {
+                                        return DetailsScreen();
+                                      },
+                                    ),
+                                  );
+                                }
+                            );
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal:3),
+                            child: Container(
+                              child: Card(
+                                color: Colors.white12,
+                                elevation: 5,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.only(
+                                        bottomLeft: Radius.circular(10),
+                                        topLeft: Radius.circular(10),
+                                        bottomRight: Radius.circular(10),
+                                        topRight: Radius.circular(10)),
+
+                                    side: BorderSide(width: 1, color: Colors.white)),
+                                child: Center(
+                                  child: ClipRRect(
+                                      borderRadius: BorderRadius.only(bottomLeft: Radius.circular(10),
+                                          topLeft: Radius.circular(10),
+                                          bottomRight: Radius.circular(10),
+                                          topRight: Radius.circular(10)),
+                                      child: ItemCard(
+                                          product: _products[i],
+                                          press: () {
+                                            store.setActiveProduct(_products[i]);
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) {
+                                                  return DetailsScreen();
+                                                },
+                                              ),
+                                            );
+                                          }
+                                      )
+                                  ),
+
+                                ),
+                              ),
+                              decoration: BoxDecoration(
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black12,
+                                    blurRadius: 2,
+                                    offset: Offset(0, 2),
+                                    spreadRadius: 0.1,
+                                  ),
+                                ],
+                                //borderRadius: BorderRadius.circular(12),
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+    ],
           ),
       ),
 
@@ -449,7 +415,9 @@ class DataSearch extends SearchDelegate<String> {
     if(index >= _products.length)
       {
         //showAlertDialog('Ups', 'There is no product called $query');
-        return Card(
+        globalString = "id6";
+        queryproducts = _products.where((p) => p.title.toLowerCase().contains(query.toLowerCase())).toList();
+        return ItemDisplayer(products: queryproducts, store: store);/*Card(
           color: kPrimaryColor,
           shape: CircleBorder(),
           child: Center(
@@ -464,7 +432,7 @@ class DataSearch extends SearchDelegate<String> {
             )
 
           ),
-        );
+        );*/
 
       }
       return ItemCard(
@@ -515,12 +483,13 @@ class DataSearch extends SearchDelegate<String> {
 
     final suggestionList = query.isEmpty?_products:
     //_products.where((q) => q.description.startsWith(query)).toList();
-    _products.where((p) => p.title.startsWith(query)).toList();
+    _products.where((p) => p.title.toLowerCase().startsWith(query.toLowerCase())).toList();
 
 
 
 
     return ListView.builder(itemBuilder: (context,index) => ListTile(
+      tileColor: Colors.black12,
       onTap: (){
         print("burarararx");
         query = suggestionList[index].title;
@@ -530,8 +499,8 @@ class DataSearch extends SearchDelegate<String> {
       },
 
 
-      leading: globalString == 'id1' ? iconcu(_products[index]) : globalString == 'id2' ?  Icon(Icons.computer) :
-      globalString == 'id3' ?  Icon(Icons.tv) : globalString == 'id4' ?  Icon(Icons.camera_alt_outlined): globalString == 'id5' ?  Icon(Icons.phone):Icon(Icons.shopping_bag_outlined),
+      leading: globalString == 'id1' ? iconcu(_products[index]) : globalString == 'id2' ?  Icon(Icons.computer,color: Colors.black) :
+      globalString == 'id3' ?  Icon(Icons.tv,color: Colors.black) : globalString == 'id4' ?  Icon(Icons.camera_alt_outlined,color: Colors.black): globalString == 'id5' ?  Icon(Icons.phone_android_rounded,color: Colors.black):Icon(Icons.search,color: Colors.black),
 
       title: RichText(
         text: TextSpan(
@@ -539,7 +508,7 @@ class DataSearch extends SearchDelegate<String> {
           style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
           children: [TextSpan(
             text: suggestionList[index].title.substring(query.length),
-            style: TextStyle(color: Colors.grey),
+            style: TextStyle(color: Colors.black),
           )]
 
         ),

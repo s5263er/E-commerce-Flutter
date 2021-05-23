@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/constants.dart';
+import 'package:flutter_app/products/constants.dart';
+
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -28,6 +29,7 @@ class AddToCart extends StatelessWidget {
             child: IconButton(
               icon: SvgPicture.asset("assets/icons/add_to_cart.svg",color: kPrimaryColor,),
               onPressed: () {
+
                 Scaffold.of(context).showSnackBar(SnackBar(content: Text('Item added successfully')));
               },
             ),

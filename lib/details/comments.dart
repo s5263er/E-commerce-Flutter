@@ -9,7 +9,9 @@ import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
-import 'package:flushbar/flushbar.dart';
+import 'package:flutter_app/products/constants.dart';
+
+
 
 
 import 'package:flutter/cupertino.dart';
@@ -17,9 +19,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_app/myStore.dart';
 
 
-import '../constants.dart';
 import '../login_screen.dart';
 import '../myStore.dart';
+import '../products/constants.dart';
 import '../textStyle.dart';
 
 int rate = 0 ;
@@ -29,10 +31,11 @@ class Comments extends StatefulWidget {
 
   final int productid;
   String msg;
+
   Comments({
     Key key,
     @required this.productid,
-    @required this.msg
+    @required this.msg,
   }) : super(key: key);
 
 
@@ -70,12 +73,12 @@ class _CommentsState extends State<Comments> {
               itemCount: _comments.length,
               itemBuilder: (context, index) {
                 return ListView(
-                  shrinkWrap: true,
+                    shrinkWrap: true,
                     physics: NeverScrollableScrollPhysics(),
-                  children: <CustomListItem> [
-                    CustomListItem(thumbnail: _products[0].image, user: _comments[index].username, comment: _comments[index].comment, likes: _comments[index].rating)
+                    children: <CustomListItem> [
+                      CustomListItem(thumbnail: _products[0].image, user: _comments[index].username, comment: _comments[index].comment, likes: _comments[index].rating)
 
-                  ]
+                    ]
                 );
               },
             ),
@@ -134,56 +137,57 @@ class _CommentsState extends State<Comments> {
               },
             ),
             Container(
-                      height: 50.0,
-                      width: 500,
-                      padding: EdgeInsets.symmetric(vertical: 2.0),
-                      alignment: Alignment.bottomCenter,
-                      child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                // First child is enter comment text input
-                                Container(
-                                  height: 50,
-                                  width: 400,
-                                  child: TextFormField(
-                                  onChanged: (myComment) {userComment = myComment;},
-                                  autocorrect: false,
-                                  decoration: new InputDecoration(
-                                    suffixIcon: IconButton(
-                                      icon: Icon(Icons.send),
-                                      iconSize: 20.0,
-                                      onPressed: () {
-                                        Navigator.pop(context);
-                                        setState(() {
-                                          final snackBar = SnackBar(key: widget.key,content: Text(widget.msg),backgroundColor: kPrimaryColor,);
-                                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                                        });
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) {
-                                              return CommentsApp(username: "deneme", rate: rate,pId: store.activeProduct.id,comment: userComment);
-                                            },
-                                          ),
-                                        );
-                                      },
-                                    ),
-                                  hintText: "Add Comment",
-                                  labelStyle:
-                                  TextStyle(fontSize: 20.0, color: Colors.white),
-                                  fillColor: Colors.blue,
-                                  border: OutlineInputBorder(
-                                  // borderRadius:
-                                  //     BorderRadius.all(Radius.zero(5.0)),
-                                  borderSide:
-                                  BorderSide(color: Colors.purpleAccent)),
-                                  ),
-                                  ),
-                                ),
+                height: 50.0,
+                width: 500,
+                padding: EdgeInsets.symmetric(vertical: 2.0),
+                alignment: Alignment.bottomCenter,
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      // First child is enter comment text input
+                      Container(
+                        height: 50,
+                        width: 400,
+                        child: TextFormField(
+                          onChanged: (myComment) {userComment = myComment;},
+                          autocorrect: false,
+                          decoration: new InputDecoration(
+                            suffixIcon: IconButton(
+                              icon: Icon(Icons.send),
+                              iconSize: 20.0,
+                              onPressed: () {
 
-                                ]
-                                )
+                                Navigator.pop(context);
+                                setState(() {
+                                  final snackBar = SnackBar(key: widget.key,content: Text(widget.msg),backgroundColor: kPrimaryColor,);
+                                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                });
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) {
+                                      return CommentsApp(username: store.username, rate: rate,pId: store.activeProduct.id,comment: userComment,token: globalToken,);
+                                    },
+                                  ),
+                                );
+                              },
+                            ),
+                            hintText: "Add Comment",
+                            labelStyle:
+                            TextStyle(fontSize: 20.0, color: Colors.white),
+                            fillColor: Colors.blue,
+                            border: OutlineInputBorder(
+                              // borderRadius:
+                              //     BorderRadius.all(Radius.zero(5.0)),
+                                borderSide:
+                                BorderSide(color: Colors.purpleAccent)),
+                          ),
+                        ),
                       ),
+
+                    ]
+                )
+            ),
           ],
         ),
       ),
@@ -215,7 +219,7 @@ class CustomListItem extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Container(
-            height: 50,
+              height: 50,
               width: 50,
               child: Icon(Icons.person,size: 50,)
           ),
@@ -312,8 +316,8 @@ class _VideoDescription extends StatelessWidget {
 
           SizedBox(height: 10,),
           Text(
-            comment,
-            style: GoogleFonts.abel(textStyle: TextStyle(color: Colors.black,fontSize: 17))
+              comment,
+              style: GoogleFonts.abel(textStyle: TextStyle(color: Colors.black,fontSize: 17))
           ),
           //const Padding(padding: EdgeInsets.symmetric(vertical: 1.0)),
 
@@ -355,7 +359,7 @@ AppBar buildAppBar(BuildContext context) {
             );
           },
         ),
-        SizedBox(width: kDefaultPaddin /2),
+        SizedBox(width: 10),
       ]
 
 
@@ -363,9 +367,9 @@ AppBar buildAppBar(BuildContext context) {
   );
 }
 
-Future<bool> addcomment(String username, int rate,String comment, int Pid) async {
+Future<bool> addcomment(String username, int rate,String comment, int Pid, String token) async {
   bool result;
-  String token = "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIyNiIsIm5hbWUiOiJUZXN0VXNlcjEiLCJuYmYiOjE2MjAyNTU1ODQsImV4cCI6MTYyMDI2Mjc4NCwiaWF0IjoxNjIwMjU1NTg0fQ.zeeQy4o-ERHNuev2252FBvAnDERU_lJZ30Z0e3KRH-eCXnWMxw-AsJZCJlV-NBWqJvPiQ4a_eB-AuRvAhkns_g";
+
 
   final Map<String, dynamic> commentData = {
     'description': comment,
@@ -379,7 +383,7 @@ Future<bool> addcomment(String username, int rate,String comment, int Pid) async
   print("comment added");
 
   http.Response response = await http.put(
-      Uri.parse("http://10.0.2.2:5000/Product/AddComment"),
+      Uri.parse("http://127.0.0.1:5000/Product/AddComment"),
       body: json.encode(commentData),
       headers: {'Content-Type': 'application/json; charset=utf-8','Authorization': 'Bearer $token',}
   );
@@ -402,9 +406,9 @@ Future<bool> addcomment(String username, int rate,String comment, int Pid) async
 
   }
   else if (response.statusCode == 401){
-  final Map<String, dynamic> responseData = json.decode(response.body);
-  result = await responseData['success'];
-  print("sıkıntıyı biliyorsun");
+    final Map<String, dynamic> responseData = json.decode(response.body);
+    result = await responseData['success'];
+    print("sıkıntıyı biliyorsun");
   }
   return  result;
 }
@@ -416,16 +420,17 @@ class CommentsApp extends StatelessWidget {
   final String comment;
   final int pId;
   final int rate;
+  final String token;
 
 
-  CommentsApp({Key key,this.username,this.comment,this.pId,this.rate}) : super(key: key);
+  CommentsApp({Key key,this.username,this.comment,this.pId,this.rate,this.token}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     var store = Provider.of<myStore>(context);
 
     return FutureBuilder<bool>(
-      future: addcomment(username,rate,comment,pId),
+      future: addcomment(username,rate,comment,pId,token),
       builder: (context, snapshot) {
 
         if (snapshot.hasError) print(snapshot.error);

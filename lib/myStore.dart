@@ -1,10 +1,14 @@
+import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/foundation.dart';
 import "package:flutter/material.dart";
 import 'package:flutter_app/models/Commentler.dart';
 import 'package:flutter_app/models/Products.dart';
 import 'package:flutter_app/products/constants.dart';
 import 'package:flutter_app/products/home_screen.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_app/models/Order.dart';
 
 import 'dart:async';
 import 'dart:convert';
@@ -38,14 +42,31 @@ class MyApps extends StatelessWidget {
             ? HomeScreen()
             : Scaffold(
 
-            backgroundColor: Colors.pinkAccent,
+            backgroundColor: kPrimaryColor,
             body:
             Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    CircularProgressIndicator(backgroundColor: Colors.pink,),
-                    Text("Loading..."),
+                    //CircularProgressIndicator(backgroundColor: Colors.pink,),
+                    SpinKitFadingFour(
+                      size: 100,
+                      color: Colors.white12,
+                    ),
+                    Text(
+                      "Loading...",
+                      style: GoogleFonts.arimaMadurai(
+                        textStyle: TextStyle(
+                          fontSize: 22,
+                          color: Colors.white,
+                          fontWeight: FontWeight.w600,
+                        ),
+
+                      ),
+                    ),
+
+
+
                   ],
                 )));
       },
@@ -80,7 +101,7 @@ class MyComments extends StatelessWidget {
 
 
         return snapshot.hasData
-            ? Comments(productid: productid, msg: "Comment Will Be Added After Admin Vertification",)
+            ? Comments(productid: productid,msg: "Comment Will be Added After Admin Verification")
             : Scaffold(
 
             backgroundColor: Colors.pinkAccent,
@@ -89,8 +110,21 @@ class MyComments extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    CircularProgressIndicator(backgroundColor: Colors.pink,),
-                    Text("Loading..."),
+                    SpinKitFadingFour(
+                      size: 100,
+                      color: Colors.white12,
+                    ),
+                    Text(
+                      "Loading...",
+                      style: GoogleFonts.arimaMadurai(
+                        textStyle: TextStyle(
+                          fontSize: 22,
+                          color: Colors.white,
+                          fontWeight: FontWeight.w600,
+                        ),
+
+                      ),
+                    ),
                   ],
                 )));
       },
@@ -101,6 +135,7 @@ class MyComments extends StatelessWidget {
 
 Future<List<Commentler>> getComments(http.Client client,int productid) async {
   String url = 'http://10.0.2.2:5000/Product/getallcomments/$productid';
+  List<Commentler> boslist = [];
 
   final response = await http.get(Uri.parse(url), headers: {
     'Content-Type': 'application/json',
@@ -112,12 +147,14 @@ Future<List<Commentler>> getComments(http.Client client,int productid) async {
     Map<String, dynamic> map = await json.decode(response.body);
     List<dynamic> data = map["data"];
 
-
+    List<Commentler> denemelisti = data.map((obj) => Commentler.fromJson(obj)).toList();
+    //print(denemelisti.first.comment);
 
     return data.map((obj) => Commentler.fromJson(obj)).toList();
   }
   //print(response.statusCode);
   else {
+    return boslist;
     throw Exception('Failed to load themes');
   }
 }
@@ -128,32 +165,38 @@ Future<List<Commentler>> getComments(http.Client client,int productid) async {
 class myStore extends ChangeNotifier
 {
   //https://mocki.io/v1/b2e00410-8e14-437f-bda8-99dd16165ee8
-
+  String adress;
   List <Commentler> _comments = [];
-
+  List <Products> _main = [];
+  List<Order> _orders = [];
   List<Products> _products = [];
   List<Products> _computers = [];
   List<Products> _tvs = [];
   List<Products> _cameras = [];
   List<Products> _phones = [];
   List<Products> _baskets = [];
+  List<Products> _baskets2 = [];
   Products _activeProduct = null;
   int totalCost = 0;
   String name,city;
   String username;
   bool login = false;
+  int shopping_cart_id;
+  List <Products> _mainphone = [];
+  List <Products> _maintv = [];
+  List <Products> _maincomp = [];
+  List <Products> _maincam = [];
   myStore() {
-
-    /* _products = [ Products(id: 1, title: "Office Code", price: 234, size: 1, description: dummyText, image: "assets/bag_1.png"),
-                  Products(id: 2, title: "Belt Bag", price: 234, size: 1, description: dummyText, image: "assets/bag_2.png", ),
-                  Products(id: 3, title: "Hang Top", price: 234, size: 1, description: dummyText, image: "assets/bag_3.png", ),
-                  Products(id: 4, title: "Old Fashion", price: 234, size: 1, description: dummyText, image: "assets/bag_4.png",),
-                  Products(id: 5, title: "Office Code", price: 234, size: 1, description: dummyText, image: "assets/bag_5.png", ),
-                  Products(id: 6, title: "Office Code", price: 234, size: 1, description: dummyText, image: "assets/bag_6.png",)];*/
-
-
-    //_comments = data2;
     _products = data;
+    _main = data;
+    _mainphone = data;
+    _maintv = data;
+    _maincam = data;
+    _maincomp = data;
+    _maincomp = _maincomp.where((p) => p.categoryid == 0).toList();
+    _maintv = _maintv.where((p) => p.categoryid == 1).toList();
+    _maincam = _maincam.where((p) => p.categoryid == 2).toList();
+    _mainphone = _mainphone.where((p) => p.categoryid == 3).toList();
     _computers = data;
     _tvs = data;
     _cameras = data;
@@ -162,12 +205,6 @@ class myStore extends ChangeNotifier
     _tvs = _tvs = _tvs.where((p) => p.categoryid == 1).toList();
     _cameras = _cameras.where((p) => p.categoryid == 2).toList();
     _phones = _phones.where((p) => p.categoryid == 3).toList();
-
-    /*_products = _products.where((element) => element.price >= globalmin && element.price <= globalmax).toList();
-    _computers = _computers.where((element) => element.price >= globalmin && element.price <= globalmax).toList();
-    _tvs = _tvs.where((element) => element.price >= globalmin && element.price <= globalmax).toList();
-    _cameras = _cameras.where((element) => element.price >= globalmin && element.price <= globalmax).toList();
-    _phones = _phones.where((element) => element.price >= globalmin && element.price <= globalmax).toList();*/
 
     notifyListeners();
 
@@ -181,58 +218,264 @@ class myStore extends ChangeNotifier
   List<Products> get phones => _phones;
   List<Products> get cameras => _cameras;
   List<Products> get tvs => _tvs;
-
-
-
-
+  List<Order> get order => _orders;
+  List<Products> get maintv => _maintv;
+  List<Products> get maincomp => _maincomp;
+  List<Products> get maincam => _maincam;
+  List<Products> get mainphone => _mainphone;
+  List<Products> get main => _main;
   List<Products> get products => _products;
   List<Products> get baskets => _baskets;
+  List<Products> get baskets2 => _baskets2;
   Products get activeProduct => _activeProduct;
 
-  Future<void> printData() async
-  {
-    final url = Uri.parse("https://mocki.io/v1/fa0a54d3-fce1-4545-a1af-b34b290843dc");
-    var body = {
-      "name": name,
-      "city": city,
-    };
-
-
+  Products getProduct (int id){
+    for(int i = 0;i<products.length ; i++){
+      if(id == products[i].id){
+        return products[i];
+      }
+    }
   }
+
+  String getStatus (Order ord){
+    if(ord.status == 0)
+      return "Processing";
+    else if (ord.status == 1)
+      return "In-Transit";
+    else
+      return "Delivered";
+  }
+
+  setAdress (String Adr){
+    adress = Adr;
+  }
+
+  setOrders (List<Order> ord){
+    _orders = ord;
+  }
+
+  setBasket(Products p ){
+    _baskets.add(p);
+  }
+  setProducts (List<Products> c){
+    _baskets = c;
+  }
+  setProducts2 (List<Products> c){
+    _baskets2 = c;
+  }
+  delProducts2 (){
+    _baskets2 = [];
+  }
+
+  delProducts (){
+    _baskets = [];
+  }
+  setFilters(){
+    if(filter == true){
+      _products = _products.where((element) => element.price >= globalmin && element.price <= globalmax).toList();
+      _phones = _phones.where((element) => element.price >= globalmin && element.price <= globalmax).toList();
+      _cameras = _cameras.where((element) => element.price >= globalmin && element.price <= globalmax).toList();
+      _computers = _computers.where((element) => element.price >= globalmin && element.price <= globalmax).toList();
+      _tvs = _tvs.where((element) => element.price >= globalmin && element.price <= globalmax).toList();
+      if(globalasc == true)
+      {
+        print("asc");
+        _products.sort((b,a) => a.price.compareTo(b.price));
+        _computers.sort((b,a) => a.price.compareTo(b.price));
+        _tvs.sort((b,a) => a.price.compareTo(b.price));
+        _phones.sort((b,a) => a.price.compareTo(b.price));
+        _cameras.sort((b,a) => a.price.compareTo(b.price));
+        globalasc = false;
+      }
+      if(globaldesc == true)
+      {
+        _products.sort((a, b) => a.price.compareTo(b.price));
+        _cameras.sort((a, b) => a.price.compareTo(b.price));
+        _phones.sort((a, b) => a.price.compareTo(b.price));
+        _tvs.sort((a, b) => a.price.compareTo(b.price));
+        _computers.sort((a, b) => a.price.compareTo(b.price));
+
+        print("desc");
+        globaldesc = false;
+      }
+      print("$_products inanilmaz");}
+    else{
+      _products = main;
+      _cameras = maincam;
+      _phones = mainphone;
+      _computers = maincomp;
+      _tvs = maintv;
+    }
+  }
+
 
 
 
   setActiveProduct (Products p){
     _activeProduct = p;
-    notifyListeners();
   }
   setComments (List<Commentler> c){
     _comments = c;
   }
 
-  addOneItemBasket(Products p) {
+
+
+  setShoppingCartId(int a){
+    shopping_cart_id = a;
+  }
+  Future<void> deleteItem(int Pid, String token) async {
+    bool result;
+
+    final Map<String, dynamic> addItemData = {
+      'productid': Pid,
+    };
+    http.Response response = await http.delete(
+        Uri.parse("http://10.0.2.2:5000/ShoppingCart/deletecartitem"),
+        body: json.encode(addItemData),
+        headers: {'Content-Type': 'application/json; charset=utf-8','Authorization': 'Bearer $token',}
+    );
+
+    print(response.statusCode.toString());
+
+    if (response.statusCode == 200) {
+      print("yes delete girdik");
+      final Map<String, dynamic> responseData = json.decode(response.body);
+      result = await responseData['success'];
+      print(result.toString());
+      //var userData = responseData['data'];
+
+      //User authUser = User.fromJson(userData);
+
+
+    } else if (response.statusCode == 400){
+      final Map<String, dynamic> responseData = json.decode(response.body);
+      result = await responseData['success'];
+
+    }
+    return  result;
+  }
+  Future<void> updateItem(int quantity,int Pid, String token) async {
+    bool result;
+
+    final Map<String, dynamic> addItemData = {
+      'productid': Pid,
+      'quantity': quantity,
+    };
+
+    http.Response response = await http.put(
+        Uri.parse("http://10.0.2.2:5000/ShoppingCart/updatecartitem"),
+        body: json.encode(addItemData),
+        headers: {'Content-Type': 'application/json; charset=utf-8','Authorization': 'Bearer $token',}
+    );
+
+    print(response.statusCode.toString());
+
+    if (response.statusCode == 200) {
+      print("update item girdik");
+      final Map<String, dynamic> responseData = json.decode(response.body);
+      result = await responseData['success'];
+      print(result.toString());
+      //var userData = responseData['data'];
+
+      //User authUser = User.fromJson(userData);
+
+
+    } else if (response.statusCode == 400){
+      final Map<String, dynamic> responseData = json.decode(response.body);
+      result = await responseData['success'];
+
+    }
+    else if (response.statusCode == 401){
+      final Map<String, dynamic> responseData = json.decode(response.body);
+      result = await responseData['success'];
+      print("sıkıntıyı biliyorsun");
+    }
+    return  result;
+  }
+  Future<void> addItem(int quantity,int Pid, String token) async {
+    bool result;
+
+    final Map<String, dynamic> addItemData = {
+      'productid': Pid,
+      'quantity': quantity
+    };
+
+    http.Response response = await http.put(
+        Uri.parse("http://10.0.2.2:5000/ShoppingCart/AddCartItem"),
+        body: json.encode(addItemData),
+        headers: {'Content-Type': 'application/json; charset=utf-8','Authorization': 'Bearer $token',}
+    );
+
+    print(response.statusCode.toString());
+
+    if (response.statusCode == 200) {
+      print("add item girdik");
+      final Map<String, dynamic> responseData = json.decode(response.body);
+      result = await responseData['success'];
+      print(result.toString());
+      //var userData = responseData['data'];
+
+      //User authUser = User.fromJson(userData);
+
+
+    } else if (response.statusCode == 400){
+      final Map<String, dynamic> responseData = json.decode(response.body);
+      result = await responseData['success'];
+
+    }
+    else if (response.statusCode == 401){
+      final Map<String, dynamic> responseData = json.decode(response.body);
+      result = await responseData['success'];
+      print("sıkıntıyı biliyorsun");
+    }
+    return  result;
+  }
+
+  addOneItemBasket(Products p,int count) {
     Products found =_baskets.firstWhere((a) => a.id == p.id, orElse: () => null);
-    if(found != null)
-    {
-      found.size += 1;
+
+    if(login == true && baskets2.isEmpty){}
+    if(login == true && found != null){
+      //count += 1;
+      updateItem(count + found.size, found.id, globalToken);
     }
-    else{
-      _baskets.add(p);
+    if(login == true && found == null){
+      addItem(count, p.id, globalToken); //update item
     }
-    notifyListeners();
+
+    if(login == false)
+      {
+        if(found != null)
+        {
+          found.size += count;
+        }
+        else{
+          p.size = count;
+
+          _baskets.add(p);
+        }
+      }
+    //notifyListeners();
   }
 
   removeBasket(Products p) {
     Products found =_baskets.firstWhere((a) => a.id == p.id, orElse: () => null);
-    if((found != null) && found.size == 1)
+    if((found != null) && found.size == 1 && login == false)
     {
-      _baskets.remove(p);
+      _baskets.remove(p); //delete item
     }
-    else
+    else if(login == false && found != null && found.size > 1)
     {
-      found.size -= 1;
+      found.size -= 1;//update item
     }
-    notifyListeners();
+    if(login == true && found != null && found.size > 1){
+      found.size -= 1;//update item
+      updateItem(found.size, found.id, globalToken);
+    }
+    else if((found != null) && found.size == 1 && login == true)
+      {
+        deleteItem(found.id,globalToken);
+      }
   }
 
   getBasketQty(){
@@ -294,6 +537,8 @@ Future<List<Products>> getThemes(http.Client client) async {
     throw Exception('Failed to load themes');
   }
 }
+
+
 
 /*class Album {
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/constants.dart';
+import 'package:flutter_app/products/constants.dart';
+
 import 'package:flutter_app/models/Products.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -14,6 +15,7 @@ class CounterWithFavBtn extends StatelessWidget {
   const CounterWithFavBtn({
     Key key,
     @required this.product,
+
   }) : super(key: key);
 
   final Products product;

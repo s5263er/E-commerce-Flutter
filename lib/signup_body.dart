@@ -14,7 +14,8 @@ import 'package:flutter_app/rounded_password_field.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_app/welcome.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'constants.dart';
+import 'package:flutter_app/products/constants.dart';
+
 import 'textStyle.dart';
 
 class Body extends StatelessWidget {
