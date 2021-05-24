@@ -1,3 +1,4 @@
+import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/products/constants.dart';
 import 'package:flutter_app/shopping_cart/cartScreen.dart';
@@ -31,6 +32,8 @@ class _CartCounterState extends State<CartCounter> {
         buildOutlineButton(
           icon: Icons.remove,
           press: () {
+            print(numOfItems.toString());
+            print(store.activeProduct.quantity.toString());
 
             if(numOfItems > 0)
             {
@@ -53,9 +56,28 @@ class _CartCounterState extends State<CartCounter> {
           icon: Icons.add,
           press: () {
             setState(() {
+              print("girsenee");
               numOfItems++;
-              store.addOneItemBasket(store.activeProduct,numOfItems);
-              print(store.baskets);
+              print(numOfItems);
+              print(store.activeProduct.quantity);
+              if(numOfItems < store.activeProduct.quantity)
+                {
+                  store.addOneItemBasket(store.activeProduct,numOfItems);
+                }
+              else {
+                CoolAlert.show(
+                  context: context,
+                  type: CoolAlertType.error,
+                  title: 'Oops...',
+                  text: '${store.activeProduct.quantity} items left in stock',
+                  confirmBtnColor: kPrimaryColor,
+                  backgroundColor: kPrimaryColor,
+                  confirmBtnText: "OK",
+                  loopAnimation: false,
+                );
+              }
+
+              //print(store.baskets);
 
             });
           },

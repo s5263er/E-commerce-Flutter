@@ -8,8 +8,8 @@ import 'Commentler.dart';
 
 
 class Order {
-  String createDate;
-  int customerId, quantity, id,status,productId,address;
+  String createDate,address;
+  int customerId, quantity, id,status,productId;
   double price;
 
   Order({
@@ -35,7 +35,7 @@ class Order {
       quantity: json["quantity"] as int,
 
       price: json["price"] as double,
-      address: json["address"] as int,
+      address: json["address"] as String,
 
     );
   }

@@ -59,7 +59,7 @@ class _ItemCardState extends State<ItemCard> {
               // products is out demo list
               widget.product.title,
               style: GoogleFonts.lato(
-                textStyle: TextStyle(fontWeight: FontWeight.bold,letterSpacing: -1,color: Colors.black),
+                textStyle: TextStyle(fontWeight: FontWeight.bold,letterSpacing: -1,color: Colors.white70),
               ),
             ),
           ),
@@ -68,7 +68,7 @@ class _ItemCardState extends State<ItemCard> {
             children: [
               Text(
                 "\$${widget.product.price}",
-                style: TextStyle(fontWeight: FontWeight.bold,letterSpacing: -1,color: Colors.black),
+                style: TextStyle(fontWeight: FontWeight.bold,letterSpacing: -1,color: Colors.white70),
               ),
               RatingBar.builder(
                 itemSize: 15,
@@ -80,35 +80,35 @@ class _ItemCardState extends State<ItemCard> {
                     case 0:
                       return Icon(
                         Icons.star,
-                        color: Colors.black,
+                        color: Colors.red,
                         size: 5,
 
                       );
                     case 1:
                       return Icon(
                         Icons.star,
-                        color: Colors.black,
+                        color: Colors.redAccent,
                         size: 5,
 
                       );
                     case 2:
                       return Icon(
                         Icons.star,
-                        color: Colors.black,
+                        color: Colors.amber,
                         size: 5,
 
                       );
                     case 3:
                       return Icon(
                         Icons.star,
-                        color: Colors.black,
+                        color: Colors.lightGreen,
                         size: 5,
 
                       );
                     case 4:
                       return Icon(
                         Icons.star,
-                        color: Colors.black,
+                        color: Colors.green,
                         size: 5,
 
                       );

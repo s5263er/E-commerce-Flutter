@@ -20,20 +20,32 @@ import 'details/comments.dart';
 List<Products> data = [];
 List <Commentler> data2 = [];
 
-class MyApps extends StatelessWidget {
+class MyApps extends StatefulWidget {
   final String category;
   MyApps({Key key, this.category}) : super(key: key);
 
   @override
+  _MyAppsState createState() => _MyAppsState();
+}
+
+class _MyAppsState extends State<MyApps> {
+  @override
   Widget build(BuildContext context) {
+    setState(() {
+      print("futuregirdikbas");
+    });
+
+
 
 
     return FutureBuilder<List<Products>>(
+
       future: getThemes(http.Client()),
       builder: (context, snapshot) {
 
         if (snapshot.hasError) print(snapshot.error);
         if(snapshot.hasData){
+          print("futuregirdik1");
           data += snapshot.data;
         };
 
@@ -104,12 +116,13 @@ class MyComments extends StatelessWidget {
             ? Comments(productid: productid,msg: "Comment Will be Added After Admin Verification")
             : Scaffold(
 
-            backgroundColor: Colors.pinkAccent,
+            backgroundColor: kPrimaryColor,
             body:
             Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+                    //CircularProgressIndicator(backgroundColor: Colors.pink,),
                     SpinKitFadingFour(
                       size: 100,
                       color: Colors.white12,
@@ -125,6 +138,9 @@ class MyComments extends StatelessWidget {
 
                       ),
                     ),
+
+
+
                   ],
                 )));
       },
@@ -521,10 +537,16 @@ Future<List<Products>> fetchPhotos(http.Client client) async {
 Future<List<Products>> getThemes(http.Client client) async {
   String url = 'http://10.0.2.2:5000/Product/getall';
 
+  /*Future.delayed(const Duration(seconds: 3), () {
+    print("delay 5 sn");
+  });
+  print("delay 5sn biter");*/
+
   final response = await http.get(Uri.parse(url), headers: {
     'Content-Type': 'application/json',
     'Accept': 'application/json',
   });
+
   if (response.statusCode == 200) {
     Map<String, dynamic> map = json.decode(response.body);
     List<dynamic> data = map["data"];

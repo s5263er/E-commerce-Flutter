@@ -33,6 +33,7 @@ class _checkoutScreenState extends State<checkoutScreen> {
             Row(
                 children: [
                 Checkbox(
+                  activeColor: Colors.greenAccent,
                   value: orgAdress,
                   onChanged: (value) {
                     setState(() {
@@ -43,7 +44,8 @@ class _checkoutScreenState extends State<checkoutScreen> {
                     });
                   },
                 ),
-                Text('I want to use my original adress'
+                Text('I want to use my original adress',
+                    style: GoogleFonts.lato(textStyle: TextStyle(fontSize: 24,height: 1.5, color: Colors.black))
                 ),
 
 
@@ -56,12 +58,12 @@ class _checkoutScreenState extends State<checkoutScreen> {
                 margin: const EdgeInsets.all(15.0),
                 padding: const EdgeInsets.all(5.0),
                 decoration: BoxDecoration(
-                  color: Colors.purpleAccent.shade100,
-                  border: Border.all(color: Colors.purple)
+                  color: kPrimaryColor,
+                  border: Border.all(color: Colors.black12)
                 ),
                 child: Text(
                     "Gemi mahallesi genis sokak no:3 melek apartmanı kat:9 daire:25",
-                  style: TextStyle(fontSize: 20.0),
+                    style: GoogleFonts.lato(textStyle: TextStyle(fontSize: 18,height: 1.5, color: Colors.white))
                 )
             ),
             SizedBox(height: 18,),
@@ -78,7 +80,7 @@ class _checkoutScreenState extends State<checkoutScreen> {
                     });
                   },
                 ),
-                Text('I want to use new adress'),
+                Text('Another delivery address', style: GoogleFonts.lato(textStyle: TextStyle(fontSize: 24,height: 1.5, color: Colors.black))),
               ],
             ),
               SizedBox(height: 20,),
@@ -89,18 +91,17 @@ class _checkoutScreenState extends State<checkoutScreen> {
                 margin: const EdgeInsets.all(15.0),
                 padding: const EdgeInsets.all(5.0),
                 decoration: BoxDecoration(
-                    color: Colors.purpleAccent.shade100,
-                    border: Border.all(color: Colors.purple)
+                    color: kPrimaryColor,
+                    border: Border.all(color: Colors.white12)
                 ),
                 child: TextField(
                   textInputAction: TextInputAction.go,
                   maxLines: 5,
                   onChanged: (test) {newAdr = test;},
-                  style: TextStyle(fontSize: 20.0),
+                  style: GoogleFonts.lato(fontSize: 18, textStyle: TextStyle(height: 1.5, color: Colors.white)),
                   decoration: InputDecoration(
                   hintText: "Please Enter New Address For Delivery",
-
-
+                    hintStyle: GoogleFonts.lato(textStyle: TextStyle(fontSize: 18,height: 1.5, color: Colors.white))
                 ),
                 ),
                 ),

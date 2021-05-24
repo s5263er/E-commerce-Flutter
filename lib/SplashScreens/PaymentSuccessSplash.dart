@@ -22,23 +22,23 @@ const waveTextStyle = TextStyle(
   fontStyle: FontStyle.italic,
 );
 const colorizeColors = [
-  Colors.white30,
   Colors.black,
+  Colors.lightGreen,
+  Colors.lightGreenAccent,
 ];
 
-class ChangePassSplash extends StatefulWidget {
+class PaymentSuccess extends StatefulWidget {
   @override
   _SplashScreenState createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<ChangePassSplash> {
+class _SplashScreenState extends State<PaymentSuccess> {
   @override
   void initState() {
     super.initState();
     Timer(
         Duration(seconds: 7),
-            () => Navigator.of(context).pushReplacement(MaterialPageRoute(
-            builder: (BuildContext context) => MyApps())));
+            () => Navigator.push( context, MaterialPageRoute( builder: (context) => MyApps()), ).then((value) => setState(() {})));
   }
 
   @override
@@ -50,14 +50,14 @@ class _SplashScreenState extends State<ChangePassSplash> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Center(
-              child: Image.network("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTXO71m0HXX1UYDcpqfpVanvkTZkJe9t7AdWA&usqp=CAU",height: 100,width: 80,)
+              child: Image.network("https://firstatlanticcommerce.com/wp-content/uploads/2020/07/HTTPS-Secure-1024x577.jpg",height: 100,width: 80,)
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               AnimatedTextKit(
                 animatedTexts: [
-                  ColorizeAnimatedText("Password Changed", textStyle: colorizeTextStyle, colors: colorizeColors,speed: Duration(milliseconds: 800)),
+                  ColorizeAnimatedText("Payment Verified...", textStyle: colorizeTextStyle, colors: colorizeColors,speed: Duration(milliseconds: 800)),
                 ],
                 //isRepeatingAnimation: true,
 

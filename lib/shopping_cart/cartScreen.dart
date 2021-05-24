@@ -232,8 +232,37 @@ class _CartScreenState extends State<CartScreen> {
                                               onPressed: () {
                                                 setState(() {
                                                   //store.baskets[i].size = store.baskets[i].size -1;
+                                                  print(store.baskets[i].id);
+                                                  int id = store.baskets[i].id;
+                                                  Products producter;
+                                                  for(var i in store.products)
+                                                    {
+                                                      if(i.id == id)
+                                                        {
+                                                          producter = i;
+                                                        }
+                                                    }
+                                                 // producter = store.products.where((element) => element.id == id).
+                                                 // _products = _products.where((element) => element.price >= globalmin && element.price <= globalmax).toList();
+                                                  if(producter.quantity > store.baskets[i].size)
+                                                    {
                                                   store.addOneItemBasket(
-                                                      store.baskets[i],1);
+                                                      store.baskets[i],1);}
+                                                  else{
+                                                    print(producter.quantity);
+                                                    print("ustu quanttity");
+                                                    CoolAlert.show(
+                                                      context: context,
+                                                      type: CoolAlertType.warning,
+                                                      title: 'Oops...',
+                                                      text: '${producter.quantity} items left in stock',
+                                                      confirmBtnColor: kPrimaryColor,
+                                                      backgroundColor: kPrimaryColor,
+                                                      confirmBtnText: "OK",
+                                                      loopAnimation: false,
+                                                    );
+
+                                                  }
                                                 });
                                               }
                                           ),
@@ -419,16 +448,45 @@ class _CartScreenState extends State<CartScreen> {
                             child: Row(
                               children: <Widget>[
                                 IconButton(
-                                  icon: Icon(Icons.arrow_upward,color: Colors.black26,),
+                                  icon: Icon(Icons.arrow_upward,color: Colors.green),
                                   onPressed: () {
                                     setState(() {
-                                      store.addOneItemBasket(store.baskets[i],1);
+                                      Products producter;
+                                      int id = store.baskets[i].id;
+                                      for(var i in store.products)
+                                      {
+                                        if(i.id == id)
+                                        {
+                                          producter = i;
+                                        }
+                                      }
+                                      // producter = store.products.where((element) => element.id == id).
+                                      // _products = _products.where((element) => element.price >= globalmin && element.price <= globalmax).toList();
+                                      if(producter.quantity > store.baskets[i].size)
+                                      {
+                                        store.addOneItemBasket(
+                                            store.baskets[i],1);}
+                                      else{
+                                        print(producter.quantity);
+                                        print("ustu quanttity");
+                                        CoolAlert.show(
+                                          context: context,
+                                          type: CoolAlertType.warning,
+                                          title: 'Oops...',
+                                          text: '${producter.quantity} items left in stock',
+                                          confirmBtnColor: kPrimaryColor,
+                                          backgroundColor: kPrimaryColor,
+                                          confirmBtnText: "OK",
+                                          loopAnimation: false,
+                                        );
+
+                                      }
                                     });
                                   },
                                 ),
                                 Text(store.baskets[i].size.toString()),
                                 IconButton(
-                                  icon: Icon(Icons.arrow_downward,color: Colors.black12,),
+                                  icon: Icon(Icons.arrow_downward,color: Colors.red,),
                                   onPressed: () {
                                     setState(() {
                                       store.removeBasket(store.baskets[i]);

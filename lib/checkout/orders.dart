@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/SplashScreens/PaymentSuccessSplash.dart';
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
@@ -7,6 +8,7 @@ import 'package:flutter_app/details/comments.dart';
 import 'package:flutter_app/models/Products.dart';
 import 'package:flutter_app/products/constants.dart';
 import 'package:flutter_app/products/home_screen.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
@@ -29,18 +31,39 @@ class Order extends StatelessWidget {
 
         if (snapshot.hasError) print(snapshot.error);
 
+        if(snapshot.hasData){
+          store.delProducts();
+        }
+
         return snapshot.hasData
-            ? HomeScreen()
+            ? PaymentSuccess()
             : Scaffold(
 
-            backgroundColor: Colors.pinkAccent,
+            backgroundColor: kPrimaryColor,
             body:
             Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    CircularProgressIndicator(backgroundColor: Colors.pink,),
-                    Text("Loading..."),
+                    //CircularProgressIndicator(backgroundColor: Colors.pink,),
+                    SpinKitFadingFour(
+                      size: 100,
+                      color: Colors.white12,
+                    ),
+                    Text(
+                      "Loading...",
+                      style: GoogleFonts.arimaMadurai(
+                        textStyle: TextStyle(
+                          fontSize: 22,
+                          color: Colors.white,
+                          fontWeight: FontWeight.w600,
+                        ),
+
+                      ),
+                    ),
+
+
+
                   ],
                 )));
       },

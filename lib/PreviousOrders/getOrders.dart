@@ -11,6 +11,8 @@ import 'package:flutter_app/models/Order.dart';
 import 'package:flutter_app/models/Products.dart';
 import 'package:flutter_app/myStore.dart';
 import 'package:flutter_app/products/constants.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 
@@ -36,14 +38,31 @@ class myOrders extends StatelessWidget {
             ? OrderScreen()
             : Scaffold(
 
-            backgroundColor: Colors.pinkAccent,
+            backgroundColor: kPrimaryColor,
             body:
             Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    CircularProgressIndicator(backgroundColor: Colors.pink,),
-                    Text("Loading..."),
+                    //CircularProgressIndicator(backgroundColor: Colors.pink,),
+                    SpinKitFadingFour(
+                      size: 100,
+                      color: Colors.white12,
+                    ),
+                    Text(
+                      "Loading...",
+                      style: GoogleFonts.arimaMadurai(
+                        textStyle: TextStyle(
+                          fontSize: 22,
+                          color: Colors.white,
+                          fontWeight: FontWeight.w600,
+                        ),
+
+                      ),
+                    ),
+
+
+
                   ],
                 )));
       },

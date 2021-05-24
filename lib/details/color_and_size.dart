@@ -77,7 +77,7 @@ class ColorAndSize extends StatelessWidget {
                   children: [
                     TextSpan(
 
-                      text: "1 item left in stock",
+                      text: "${product.quantity} item left in stock",
                       style: GoogleFonts.lato(
                         textStyle: TextStyle(
                           color: kPrimaryColor,

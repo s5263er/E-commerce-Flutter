@@ -5,6 +5,8 @@ import 'package:flutter_credit_card/credit_card_model.dart';
 import 'package:flutter_credit_card/flutter_credit_card.dart';
 import 'package:flutter_app/products/constants.dart';
 
+import '../products/constants.dart';
+
 class MySample extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -55,7 +57,7 @@ class MySampleState extends State<MySample> {
                         cvvCode: cvvCode,
                         cardHolderName: cardHolderName,
                         expiryDate: expiryDate,
-                        themeColor: Colors.purple,
+                        themeColor: kPrimaryColor,
                         cardNumberDecoration: const InputDecoration(
                           border: OutlineInputBorder(),
                           labelText: 'Number',

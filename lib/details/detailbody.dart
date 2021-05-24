@@ -1,3 +1,4 @@
+import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/products/constants.dart';
@@ -101,7 +102,24 @@ class _DetailBodyState extends State<DetailBody> {
                                 icon: Icons.add,
                                 press: () {
                                   setState(() {
-                                    numOfItems++;
+                                    if(numOfItems < store.activeProduct.quantity)
+                                    {
+                                      numOfItems++;
+                                      //store.addOneItemBasket(store.activeProduct,numOfItems);
+
+                                    }
+                                    else {
+                                      CoolAlert.show(
+                                        context: context,
+                                        type: CoolAlertType.error,
+                                        title: 'Oops...',
+                                        text: '${store.activeProduct.quantity} items left in stock',
+                                        confirmBtnColor: kPrimaryColor,
+                                        backgroundColor: kPrimaryColor,
+                                        confirmBtnText: "OK",
+                                        loopAnimation: false,
+                                      );
+                                    }
                                     //store.addOneItemBasket(store.activeProduct);
                                     print(store.baskets);
 
