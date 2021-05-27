@@ -558,6 +558,7 @@ class User {
   String name, surname, username,phoneNumber, mailAddress;
   int id;
   List <Products> basket = [];
+  String address;
 
   User({
     this.id,
@@ -567,7 +568,7 @@ class User {
     this.mailAddress,
     this.phoneNumber,
     this.basket,
-
+    this.address
   });
 
   factory User.fromJson(Map<String, dynamic> json) {
@@ -578,6 +579,7 @@ class User {
       username: json['username'] as String,
       mailAddress: json['mailAddress'] as String,
       phoneNumber: json['phoneNumber'] as String,
+      address: json['address'] as String
 
     );
   }

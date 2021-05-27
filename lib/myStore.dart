@@ -30,10 +30,17 @@ class MyApps extends StatefulWidget {
 
 class _MyAppsState extends State<MyApps> {
   @override
+  void initState(){
+    super.initState();
+    getThemes(http.Client());
+  }
+
+  @override
   Widget build(BuildContext context) {
     setState(() {
       print("futuregirdikbas");
     });
+   //
 
 
 
@@ -199,16 +206,21 @@ class myStore extends ChangeNotifier
   bool login = false;
   int shopping_cart_id;
   List <Products> _mainphone = [];
+  List<Products> _disc = [];
   List <Products> _maintv = [];
   List <Products> _maincomp = [];
   List <Products> _maincam = [];
+  List<Products> _maindisc = [];
   myStore() {
     _products = data;
+    _disc = data;
     _main = data;
     _mainphone = data;
     _maintv = data;
     _maincam = data;
     _maincomp = data;
+    _maindisc = data;
+    _maindisc = _maindisc.where((p) => p.discountrate != 0).toList();
     _maincomp = _maincomp.where((p) => p.categoryid == 0).toList();
     _maintv = _maintv.where((p) => p.categoryid == 1).toList();
     _maincam = _maincam.where((p) => p.categoryid == 2).toList();
@@ -217,6 +229,7 @@ class myStore extends ChangeNotifier
     _tvs = data;
     _cameras = data;
     _phones = data;
+    _disc = _disc.where((p) => p.discountrate != 0).toList();
     _computers = _computers.where((p) => p.categoryid == 0).toList();
     _tvs = _tvs = _tvs.where((p) => p.categoryid == 1).toList();
     _cameras = _cameras.where((p) => p.categoryid == 2).toList();
@@ -231,10 +244,12 @@ class myStore extends ChangeNotifier
   List<Commentler> get comments => _comments;
 
   List<Products> get computers => _computers;
+  List<Products> get disc => _disc;
   List<Products> get phones => _phones;
   List<Products> get cameras => _cameras;
   List<Products> get tvs => _tvs;
   List<Order> get order => _orders;
+  List<Products> get maindisc => _maindisc;
   List<Products> get maintv => _maintv;
   List<Products> get maincomp => _maincomp;
   List<Products> get maincam => _maincam;
@@ -293,6 +308,7 @@ class myStore extends ChangeNotifier
       _cameras = _cameras.where((element) => element.price >= globalmin && element.price <= globalmax).toList();
       _computers = _computers.where((element) => element.price >= globalmin && element.price <= globalmax).toList();
       _tvs = _tvs.where((element) => element.price >= globalmin && element.price <= globalmax).toList();
+      _disc = _disc.where((element) => element.price >= globalmin && element.price <= globalmax).toList();
       if(globalasc == true)
       {
         print("asc");
@@ -301,6 +317,7 @@ class myStore extends ChangeNotifier
         _tvs.sort((b,a) => a.price.compareTo(b.price));
         _phones.sort((b,a) => a.price.compareTo(b.price));
         _cameras.sort((b,a) => a.price.compareTo(b.price));
+        _disc.sort((b,a) => a.price.compareTo(b.price));
         globalasc = false;
       }
       if(globaldesc == true)
@@ -310,6 +327,7 @@ class myStore extends ChangeNotifier
         _phones.sort((a, b) => a.price.compareTo(b.price));
         _tvs.sort((a, b) => a.price.compareTo(b.price));
         _computers.sort((a, b) => a.price.compareTo(b.price));
+        _disc.sort((a, b) => a.price.compareTo(b.price));
 
         print("desc");
         globaldesc = false;
@@ -321,6 +339,7 @@ class myStore extends ChangeNotifier
       _phones = mainphone;
       _computers = maincomp;
       _tvs = maintv;
+      _disc = maindisc;
     }
   }
 
@@ -541,6 +560,9 @@ Future<List<Products>> getThemes(http.Client client) async {
     print("delay 5 sn");
   });
   print("delay 5sn biter");*/
+  print("sanki 1");
+  await Future.delayed(Duration(seconds: 1));
+  print("1 saniye bekledi");
 
   final response = await http.get(Uri.parse(url), headers: {
     'Content-Type': 'application/json',

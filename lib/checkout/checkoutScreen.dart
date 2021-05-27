@@ -12,6 +12,9 @@ import '../myStore.dart';
 
 
 class checkoutScreen extends StatefulWidget {
+  String erdem;
+
+  checkoutScreen({Key key,this.erdem}) : super(key: key);
   @override
   _checkoutScreenState createState() => _checkoutScreenState();
 }
@@ -19,6 +22,7 @@ class checkoutScreen extends StatefulWidget {
 class _checkoutScreenState extends State<checkoutScreen> {
   bool orgAdress = false,newAdress = false;
   String newAdr;
+
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +66,7 @@ class _checkoutScreenState extends State<checkoutScreen> {
                   border: Border.all(color: Colors.black12)
                 ),
                 child: Text(
-                    "Gemi mahallesi genis sokak no:3 melek apartmanı kat:9 daire:25",
+                    widget.erdem,
                     style: GoogleFonts.lato(textStyle: TextStyle(fontSize: 18,height: 1.5, color: Colors.white))
                 )
             ),

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/PreviousOrders/getOrders.dart';
 import 'package:flutter_app/PreviousOrders/previousOrders.dart';
+import 'package:flutter_app/Profile/adrfuture.dart';
+import 'package:flutter_app/Profile/changeAddress.dart';
 import 'package:flutter_app/Profile/changePass.dart';
 import 'package:flutter_app/details/profile_screen.dart';
 import 'package:flutter_app/details/profilemenu.dart';
@@ -118,9 +120,18 @@ class _ProfileBodyState extends State<ProfileBody> {
               press: () {},
             ),
             ProfileMenu(
-              text: "Help Center",
-              icon2: Icons.help_outline_outlined,
-              press: () {},
+              text: "Change Address",
+              icon2: Icons.home,
+              press: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return FutureChange();
+                    },
+                  ),
+                );
+              },
             ),
             ProfileMenu(
               text: "Log Out",

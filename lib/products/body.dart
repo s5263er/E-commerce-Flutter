@@ -79,6 +79,11 @@ class _BodyState extends State<Body> {
       {
         _products = queryproducts;
       }
+    else if(globalString == "id16")
+      {
+        print(store.disc);
+        _products = store.disc;
+      }
     else{
 
       _products = store.products;
@@ -259,6 +264,17 @@ class _BodyState extends State<Body> {
                   onPressed: (){
                     setState(() {
                       globalString = 'id4';
+                    });
+                  }
+              ),
+              IconButton(
+                  icon: Icon(Icons.arrow_downward_sharp),
+                  iconSize: 30,
+                  splashRadius: 30,
+                  color: Colors.white70,
+                  onPressed: (){
+                    setState(() {
+                      globalString = 'id16';
                     });
                   }
               ),

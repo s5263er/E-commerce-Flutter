@@ -15,6 +15,8 @@ class Products {
   int rating;
   int size;
   List<Commentler> comments;
+  dynamic discountrate;
+  dynamic discprice;
 
   Products({
     this.id,
@@ -26,7 +28,9 @@ class Products {
     this.categoryid,
     this.comments,
     this.rating,
-    this.quantity
+    this.quantity,
+    this.discountrate,
+    this.discprice
 
   });
 
@@ -44,6 +48,8 @@ class Products {
 
       price: json["price"] as int,
       rating: json["rating"] as int,
+      discountrate: json["discountRate"] ,
+      discprice: json["discountedPrice"] ,
       //comments: json["comments"] as List,
     );
   }

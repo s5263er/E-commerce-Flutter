@@ -59,17 +59,31 @@ class _ItemCardState extends State<ItemCard> {
               // products is out demo list
               widget.product.title,
               style: GoogleFonts.lato(
-                textStyle: TextStyle(fontWeight: FontWeight.bold,letterSpacing: -1,color: Colors.white70),
+                textStyle: TextStyle(fontWeight: FontWeight.bold,letterSpacing: -1,color: Colors.lime),
               ),
             ),
           ),
 
           Row(
             children: [
-              Text(
+              widget.product.discountrate==0?Text(
                 "\$${widget.product.price}",
-                style: TextStyle(fontWeight: FontWeight.bold,letterSpacing: -1,color: Colors.white70),
+                style: TextStyle(fontWeight: FontWeight.bold,letterSpacing: -1,color: Colors.lightGreen),
+              ):
+              Row(
+                children: [
+                  Text(
+                    "\$${widget.product.price}->",
+                    style: TextStyle(decoration: TextDecoration.lineThrough,fontWeight: FontWeight.bold,letterSpacing: -1,color: Colors.redAccent),
+                  ),
+                  Text(
+                    "\$${widget.product.discprice}",
+                    style: TextStyle(decoration: TextDecoration.underline,fontWeight: FontWeight.bold,letterSpacing: -1,color: Colors.lightGreen),
+                  ),
+                ],
               ),
+              SizedBox(width: 2,),
+
               RatingBar.builder(
                 itemSize: 15,
                 initialRating: widget.product.rating.truncateToDouble(),

@@ -23,10 +23,25 @@ class Order extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var store = Provider.of<myStore>(context);
+    for(var i in store.baskets)
+    {
+      print("girdi aq");
+      int id = i.id;
+      for(var j in store.products)
+      {
+        if(j.id == i.id)
+        {
+          j.quantity = j.quantity - i.size;
+          print(j.title);
+          print(j.size);
+          print(j.quantity);
+        }
+      }
+    }
 
 
     return FutureBuilder<bool>(
-      future: AddOrder(store.baskets),
+      future: AddOrder(store.baskets,store.adress),
       builder: (context, snapshot) {
 
         if (snapshot.hasError) print(snapshot.error);
@@ -73,7 +88,7 @@ class Order extends StatelessWidget {
 }
 
 
-Future<bool> AddOrder(List<Products> basket) async {
+Future<bool> AddOrder(List<Products> basket,String adr) async {
   bool result;
   print("inside addOder");
   for(int i = 0;i< basket.length ; i++ )
@@ -81,7 +96,8 @@ Future<bool> AddOrder(List<Products> basket) async {
     final Map<String, dynamic> OrderData = {
       'quantity': basket[i].size,
       'productid': basket[i].id,
-      'price': basket[i].price*basket[i].size,
+      'price': basket[i].discountrate == 0?basket[i].price*basket[i].size: basket[i].discprice*basket[i].size,
+      'address': adr,
     };
 
     print("item ${basket[i].title}");

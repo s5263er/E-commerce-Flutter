@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:cool_alert/cool_alert.dart';
 import "package:flutter/material.dart";
+import 'package:flutter_app/Profile/adrfuture.dart';
 import 'package:flutter_app/checkout/checkoutScreen.dart';
 import 'package:flutter_app/products/constants.dart';
 
@@ -335,7 +336,7 @@ class _CartScreenState extends State<CartScreen> {
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) {
-                                    return checkoutScreen();
+                                    return FutureForCheckout();
                                   },
                                 ),
                               );
@@ -441,7 +442,8 @@ class _CartScreenState extends State<CartScreen> {
 
 
                           ),
-                          Expanded(flex: 2,child: Text(store.baskets[i].title + " Price: " + store.baskets[i].price.toString() + "\$")),
+                          store.baskets[i].discountrate == 0?Expanded(flex: 2,child: Text(store.baskets[i].title + " Price: " + store.baskets[i].price.toString() + "\$")):
+                Expanded(flex: 2,child: Text(store.baskets[i].title + " Price w/Discount: " + store.baskets[i].discprice.toString() + "\$",)),
                           Expanded(flex: 2,child: Container(
                             decoration: BoxDecoration(
                             ),

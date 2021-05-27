@@ -38,7 +38,7 @@ class _SplashScreenState extends State<PaymentSuccess> {
     super.initState();
     Timer(
         Duration(seconds: 7),
-            () => Navigator.push( context, MaterialPageRoute( builder: (context) => MyApps()), ).then((value) => setState(() {})));
+            () => Navigator.push( context, MaterialPageRoute( builder: (context) => new MyApps()), ).then((value) => setState(() {})));
   }
 
   @override
