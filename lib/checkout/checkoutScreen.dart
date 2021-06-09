@@ -68,7 +68,7 @@ class _checkoutScreenState extends State<checkoutScreen> {
                 child: Text(
                     widget.erdem,
                     style: GoogleFonts.lato(textStyle: TextStyle(fontSize: 18,height: 1.5, color: Colors.white))
-                )
+                ),
             ),
             SizedBox(height: 18,),
             Row(

@@ -48,7 +48,7 @@ class Products {
 
       price: json["price"] as int,
       rating: json["rating"] as int,
-      discountrate: json["discountRate"] ,
+      discountrate: json["discountRate"]*100 ,
       discprice: json["discountedPrice"] ,
       //comments: json["comments"] as List,
     );

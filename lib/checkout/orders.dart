@@ -76,9 +76,6 @@ class Order extends StatelessWidget {
 
                       ),
                     ),
-
-
-
                   ],
                 )));
       },

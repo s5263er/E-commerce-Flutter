@@ -383,7 +383,7 @@ Future<bool> addcomment(String username, int rate,String comment, int Pid, Strin
   print("comment added");
 
   http.Response response = await http.put(
-      Uri.parse("http://127.0.0.1:5000/Product/AddComment"),
+      Uri.parse("http://10.0.2.2:5000/Product/AddComment"),
       body: json.encode(commentData),
       headers: {'Content-Type': 'application/json; charset=utf-8','Authorization': 'Bearer $token',}
   );
