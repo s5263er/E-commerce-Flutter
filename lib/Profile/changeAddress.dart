@@ -84,64 +84,68 @@ class changeAddr extends StatelessWidget {
             ),
           ),
         ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Image.network('https://png.pngtree.com/element_our/20190528/ourlarge/pngtree-home-address-of-the-current-residence-image_1132241.jpg',height: 300,width: 300,),
+      body: SingleChildScrollView(
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Image.network('https://png.pngtree.com/element_our/20190528/ourlarge/pngtree-home-address-of-the-current-residence-image_1132241.jpg',height: 350,width: 300,),
 
-            Container(
+              Container(
 
-            height: 5 * 24.0,
-            width: 300,
-            margin: const EdgeInsets.all(15.0),
-            padding: const EdgeInsets.all(5.0),
-            decoration: BoxDecoration(
-                color: kPrimaryColor,
-                border: Border.all(color: Colors.white12)
-            ),
-            child: TextField(
-              textInputAction: TextInputAction.go,
-              maxLines: 5,
-              onChanged: (test) {newAdr = test;},
-              style: GoogleFonts.lato(fontSize: 18, textStyle: TextStyle(height: 1.5, color: Colors.white)),
-              decoration: InputDecoration(
-                  hintText: erdem == null?"You have not registered your address":erdem,
-                  hintStyle: GoogleFonts.lato(textStyle: TextStyle(fontSize: 18,height: 1.5, color: Colors.white))
-              ),
-            ),
-    ),
-            AnimatedButton(
-              color: kPrimaryColor,
-              shadowDegree: ShadowDegree.dark,
-              child: Text(
-                "Change My Address",
-                style: GoogleFonts.lato(
-                  textStyle: TextStyle(
-                    fontSize: 22,
-                    color: Colors.white,
-                    fontWeight: FontWeight.w600,
+                height: 120,
+                width: 300,
+                margin: const EdgeInsets.all(15.0),
+                padding: const EdgeInsets.all(5.0),
+                decoration: BoxDecoration(
+                    color: kPrimaryColor,
+                    border: Border.all(color: Colors.white12)
+                ),
+                child: TextField(
+                  textInputAction: TextInputAction.go,
+                  maxLines: 5,
+                  onChanged: (test) {newAdr = test;},
+                  style: GoogleFonts.lato(fontSize: 18, textStyle: TextStyle(height: 1.5, color: Colors.white)),
+                  decoration: InputDecoration(
+                      hintText: erdem == null?"You have not registered your address":erdem,
+                      hintStyle: GoogleFonts.lato(textStyle: TextStyle(fontSize: 18,height: 1.5, color: Colors.white))
                   ),
-
                 ),
               ),
-              onPressed: (){
-                SendAddr(newAdr);
-                CoolAlert.show(
-                  context: context,
-                  type: CoolAlertType.success,
-                  title: 'Success',
-                  text: 'Address change completed successfully!',
-                  confirmBtnColor: kPrimaryColor,
-                  backgroundColor: kPrimaryColor,
-                  confirmBtnText: "OK",
-                  loopAnimation: false,
-                );
-              },
-            ),
-          ],
-        ),
+              AnimatedButton(
+                color: kPrimaryColor,
+                shadowDegree: ShadowDegree.dark,
+                child: Text(
+                  "Change My Address",
+                  style: GoogleFonts.lato(
+                    textStyle: TextStyle(
+                      fontSize: 22,
+                      color: Colors.white,
+                      fontWeight: FontWeight.w600,
+                    ),
+
+                  ),
+                ),
+                onPressed: (){
+                  SendAddr(newAdr);
+                  CoolAlert.show(
+                    context: context,
+                    type: CoolAlertType.success,
+                    title: 'Success',
+                    text: 'Address change completed successfully!',
+                    confirmBtnColor: kPrimaryColor,
+                    backgroundColor: kPrimaryColor,
+                    confirmBtnText: "OK",
+                    loopAnimation: false,
+                  );
+                },
+              ),
+            ],
+          ),
+
+        )
+
       ));
   }
 }

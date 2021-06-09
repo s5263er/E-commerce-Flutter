@@ -4,6 +4,7 @@ import 'dart:async';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/Profile/changePass.dart';
+import 'package:flutter_app/checkout/invoice.dart';
 import 'package:flutter_app/details/profilebody.dart';
 import 'package:flutter_app/myStore.dart';
 import 'package:flutter_app/products/constants.dart';
@@ -37,8 +38,8 @@ class _SplashScreenState extends State<PaymentSuccess> {
   void initState() {
     super.initState();
     Timer(
-        Duration(seconds: 7),
-            () => Navigator.push( context, MaterialPageRoute( builder: (context) => new MyApps()), ).then((value) => setState(() {})));
+        Duration(seconds: 4),
+            () => Navigator.push( context, MaterialPageRoute( builder: (context) => new Invoice()), ).then((value) => setState(() {})));
   }
 
   @override
@@ -50,7 +51,7 @@ class _SplashScreenState extends State<PaymentSuccess> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Center(
-              child: Image.network("https://firstatlanticcommerce.com/wp-content/uploads/2020/07/HTTPS-Secure-1024x577.jpg",height: 100,width: 80,)
+              child: Image.network("https://www.tatilmaximum.com.tr/images/footer/6.png",height: 100,width: 80,)
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -70,7 +71,7 @@ class _SplashScreenState extends State<PaymentSuccess> {
             children: [
               AnimatedTextKit(
                 animatedTexts: [
-                  WavyAnimatedText("Directing to main page...",textStyle:waveTextStyle),
+                  WavyAnimatedText("Creating invoice",textStyle:waveTextStyle),
                 ],
                 isRepeatingAnimation: true,
 

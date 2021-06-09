@@ -47,7 +47,7 @@ class Order extends StatelessWidget {
         if (snapshot.hasError) print(snapshot.error);
 
         if(snapshot.hasData){
-          store.delProducts();
+          //store.delProducts();
         }
 
         return snapshot.hasData
