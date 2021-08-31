@@ -50,7 +50,7 @@ Future<List<Products>> getCart(String globalToken) async {
 
   } else if (response.statusCode == 400){
     final Map<String, dynamic> responseData = json.decode(response.body);
-    print("get cart olmadi mystoredayim/cartscreen");
+    print("get cart olmadi mystoredayim/cartscreen satir 53");
   }
   return  result;
 }
@@ -77,7 +77,8 @@ Future<bool> getBoolCart(String globalToken) async {
 
 
   } else if (response.statusCode == 400){
-    print("get cart olmadi mystoredayim/cartscreen");
+    print("get boolcart olmadi mystoredayim/cartscreen");
+    //return true;
   }
   return  result;
 }

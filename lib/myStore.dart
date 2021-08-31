@@ -527,7 +527,13 @@ class myStore extends ChangeNotifier
     int total = 0;
     for (int i=0;i<baskets.length;i++)
     {
-      total += baskets[i].size * baskets[i].price;
+
+      if(baskets[i].discountrate == 0){
+        total += baskets[i].size * baskets[i].price;
+      }
+      else{
+        total += baskets[i].size * baskets[i].discprice;
+      }
     }
     return total;
   }

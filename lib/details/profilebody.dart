@@ -6,6 +6,7 @@ import 'package:flutter_app/Profile/changeAddress.dart';
 import 'package:flutter_app/Profile/changePass.dart';
 import 'package:flutter_app/details/profile_screen.dart';
 import 'package:flutter_app/details/profilemenu.dart';
+import 'package:flutter_app/invoice_pdf/pdf_page.dart';
 import 'package:flutter_app/products/constants.dart';
 import 'package:flutter_app/products/home_screen.dart';
 import 'package:flutter_app/search/search_history.dart';
@@ -117,7 +118,16 @@ class _ProfileBodyState extends State<ProfileBody> {
             ProfileMenu(
               text: "Settings",
               icon2: Icons.settings,
-              press: () {},
+              press: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return PdfPage();
+                    },
+                  ),
+                );
+              },
             ),
             ProfileMenu(
               text: "Change Address",
